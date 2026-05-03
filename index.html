@@ -1,0 +1,1238 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EvalImmo — Achat ou location ?</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --blue:#1d4ed8;--blue-l:#3b82f6;--blue-pale:#eff6ff;--blue-b:#bfdbfe;
+  --green:#16a34a;--green-pale:#f0fdf4;--green-b:#bbf7d0;
+  --red:#dc2626;--red-pale:#fef2f2;--red-b:#fecaca;
+  --orange:#b45309;--orange-pale:#fffbeb;--orange-b:#fde68a;
+  --g50:#f8fafc;--g100:#f1f5f9;--g200:#e2e8f0;--g300:#cbd5e1;
+  --g400:#94a3b8;--g500:#64748b;--g600:#475569;--g700:#334155;
+  --g800:#1e293b;--g900:#0f172a;
+  --r:12px;--sh:0 1px 3px rgba(0,0,0,.07),0 4px 16px rgba(0,0,0,.05);
+}
+html{scroll-behavior:smooth}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--g50);color:var(--g800);font-size:14px;line-height:1.5}
+
+.hdr{background:linear-gradient(140deg,#0f172a 0%,#1d4ed8 55%,#3b82f6 100%);color:#fff}
+.hdr-top{max-width:1000px;margin:0 auto;padding:22px 20px 18px;display:flex;align-items:center;gap:14px}
+.hdr-logo{width:46px;height:46px;background:rgba(255,255,255,.14);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.hdr-text h1{font-size:1.5rem;font-weight:800;letter-spacing:-.4px}
+.hdr-text p{font-size:.8rem;opacity:.65;margin-top:2px}
+.hdr-nav{background:rgba(0,0,0,.18);border-top:1px solid rgba(255,255,255,.08)}
+.hdr-nav ul{max-width:1000px;margin:0 auto;display:flex;list-style:none;overflow-x:auto;padding:0 4px}
+.hdr-nav li a{display:flex;align-items:center;gap:6px;padding:10px 16px;font-size:.78rem;font-weight:500;color:rgba(255,255,255,.55);text-decoration:none;border-bottom:2px solid transparent;white-space:nowrap;transition:color .15s,border-color .15s}
+.hdr-nav li a:hover{color:#fff}
+.hdr-nav li a.active{color:#fff;border-bottom-color:#60a5fa}
+.hdr-nav .n{width:17px;height:17px;background:rgba(255,255,255,.18);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.62rem;font-weight:700}
+.hdr-nav .active .n{background:#60a5fa;color:#0f172a}
+
+.app{max-width:1000px;margin:28px auto 80px;padding:0 16px}
+.sec-hdr{display:flex;align-items:flex-start;gap:12px;margin-bottom:14px}
+.sec-num{width:28px;height:28px;background:var(--blue);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:800;flex-shrink:0;margin-top:2px}
+.sec-hdr h2{font-size:1rem;font-weight:700;color:var(--g900)}
+.sec-hdr p{font-size:.76rem;color:var(--g500);margin-top:2px;line-height:1.4}
+.sec{margin-bottom:36px}
+
+.card{background:#fff;border-radius:var(--r);box-shadow:var(--sh);margin-bottom:14px;overflow:hidden}
+.card-t{padding:12px 18px;border-bottom:1px solid var(--g100);font-size:.75rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--g600);display:flex;align-items:center;gap:8px}
+.card-t .ico{font-size:.95rem}
+.card-b{padding:16px 18px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.gap-sm{display:flex;flex-direction:column;gap:14px}
+
+.field{display:flex;flex-direction:column;gap:4px}
+.field label{font-size:.77rem;font-weight:500;color:var(--g600);display:flex;justify-content:space-between;align-items:baseline}
+.field label .hint{font-size:.7rem;font-weight:400;color:var(--g400)}
+.iw{position:relative}
+.iw input[type=number],.iw input[type=text]{width:100%;padding:8px 36px 8px 10px;border:1.5px solid var(--g200);border-radius:8px;font-size:.85rem;color:var(--g800);background:#fff;outline:none;transition:border-color .15s,box-shadow .15s}
+.iw input:focus{border-color:var(--blue-l);box-shadow:0 0 0 3px rgba(59,130,246,.12)}
+.iw input.auto{background:var(--g50);color:var(--g500)}
+.iw .u{position:absolute;right:9px;top:50%;transform:translateY(-50%);font-size:.7rem;color:var(--g400);pointer-events:none;font-weight:500}
+
+.rbg{display:flex;gap:4px;flex-wrap:wrap}
+.rbg input{display:none}
+.rbg label{padding:5px 11px;border:1.5px solid var(--g200);border-radius:6px;font-size:.75rem;font-weight:500;color:var(--g500);cursor:pointer;transition:all .15s;white-space:nowrap}
+.rbg input:checked+label{border-color:var(--blue);background:var(--blue-pale);color:var(--blue)}
+
+.tog-row{display:flex;align-items:center;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--g100)}
+.tog-row:last-child{border-bottom:none;padding-bottom:0}
+.tog-lbl{font-size:.8rem;color:var(--g700);font-weight:500}
+.tog-lbl small{display:block;font-size:.7rem;font-weight:400;color:var(--g400)}
+.sw{position:relative;display:inline-block;width:38px;height:21px;flex-shrink:0}
+.sw input{opacity:0;width:0;height:0}
+.sl{position:absolute;inset:0;background:var(--g300);border-radius:21px;cursor:pointer;transition:.2s}
+.sl::before{content:'';position:absolute;width:15px;height:15px;left:3px;top:3px;background:#fff;border-radius:50%;transition:.2s;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+.sw input:checked+.sl{background:var(--blue)}
+.sw input:checked+.sl::before{transform:translateX(17px)}
+
+.sub{font-size:.68rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--g400);margin:16px 0 10px;padding-bottom:6px;border-bottom:1px solid var(--g100)}
+.sub:first-child{margin-top:0}
+
+.kpi-row{display:grid;gap:12px;margin-bottom:14px}
+.kpi-row.k2{grid-template-columns:1fr 1fr}
+.kpi-row.k3{grid-template-columns:1fr 1fr 1fr}
+.kpi-row.k4{grid-template-columns:repeat(4,1fr)}
+.kpi{background:#fff;border-radius:10px;padding:14px 16px;border:1.5px solid var(--g200);box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.kpi.kblue{background:var(--blue-pale);border-color:var(--blue-b)}
+.kpi.kgreen{background:var(--green-pale);border-color:var(--green-b)}
+.kpi.kred{background:var(--red-pale);border-color:var(--red-b)}
+.kpi.korange{background:var(--orange-pale);border-color:var(--orange-b)}
+.kpi .kl{font-size:.65rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--g400);margin-bottom:5px}
+.kpi.kblue .kl{color:#60a5fa}.kpi.kgreen .kl{color:#4ade80}.kpi.kred .kl{color:#f87171}.kpi.korange .kl{color:#fbbf24}
+.kpi .kv{font-size:1.55rem;font-weight:800;letter-spacing:-.5px;line-height:1.1;color:var(--g800)}
+.kpi.kblue .kv{color:var(--blue)}.kpi.kgreen .kv{color:var(--green)}.kpi.kred .kv{color:var(--red)}.kpi.korange .kv{color:var(--orange)}
+.kpi .ks{font-size:.7rem;color:var(--g400);margin-top:4px}
+
+.ctbl{width:100%;border-collapse:collapse}
+.ctbl tr{border-bottom:1px solid var(--g100)}
+.ctbl tr:last-child{border-bottom:none}
+.ctbl td{padding:7px 0;font-size:.8rem;vertical-align:middle}
+.ctbl td:last-child{text-align:right;font-weight:600;color:var(--g800)}
+.ctbl .cat td{font-size:.68rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--g400);padding-top:14px}
+.ctbl .ttl td{font-weight:700;font-size:.85rem;border-top:2px solid var(--g200) !important;padding-top:10px;color:var(--g900)}
+.ctbl .pos td:last-child{color:var(--green)}.ctbl .neg td:last-child{color:var(--red)}
+.ctbl .hl td{color:var(--blue)}.ctbl .hl td:last-child{color:var(--blue)}
+.ctbl .muted td{color:var(--g400)}.ctbl .muted td:last-child{color:var(--g400)}
+.ctbl .indent td:first-child{padding-left:14px;color:var(--g500)}
+
+.chart-wrap{padding:16px 18px 8px;position:relative}
+canvas{width:100%;display:block}
+.chart-leg{display:flex;flex-wrap:wrap;gap:12px;padding:4px 18px 16px}
+.leg-i{display:flex;align-items:center;gap:6px;font-size:.73rem;color:var(--g500)}
+.leg-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.leg-dash{width:18px;height:2px;flex-shrink:0;background:repeating-linear-gradient(90deg,currentColor 0,currentColor 4px,transparent 4px,transparent 8px)}
+
+.ptbl-wrap{overflow-x:auto;padding:0 18px 18px}
+.ptbl{width:100%;border-collapse:collapse;font-size:.76rem;white-space:nowrap}
+.ptbl thead th{background:var(--g100);padding:8px 10px;text-align:right;font-weight:600;color:var(--g600);font-size:.68rem;text-transform:uppercase;letter-spacing:.04em}
+.ptbl thead th:first-child{text-align:left;border-radius:6px 0 0 6px}
+.ptbl thead th:last-child{border-radius:0 6px 6px 0}
+.ptbl tbody td{padding:7px 10px;text-align:right;color:var(--g600);border-bottom:1px solid var(--g100)}
+.ptbl tbody td:first-child{text-align:left;color:var(--g900);font-weight:600}
+.ptbl tbody tr:hover{background:var(--g50)}
+.ptbl .yr-hl{background:var(--blue-pale) !important}
+.ptbl .yr-hl td{color:var(--blue) !important;font-weight:700 !important}
+.ptbl .pos{color:var(--green) !important}.ptbl .neg{color:var(--red) !important}
+.ptbl .travaux-yr td:first-child{color:var(--orange) !important}
+
+.info{background:var(--blue-pale);border:1px solid var(--blue-b);border-radius:8px;padding:10px 14px;font-size:.78rem;color:var(--blue);margin-bottom:14px;line-height:1.5}
+.info.warn{background:var(--orange-pale);border-color:var(--orange-b);color:var(--orange)}
+.info.good{background:var(--green-pale);border-color:var(--green-b);color:var(--green)}
+.info.neutral{background:var(--g50);border-color:var(--g200);color:var(--g600)}
+
+.s-layout{display:grid;grid-template-columns:380px 1fr;gap:16px;align-items:start}
+.s2-layout{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start}
+.sep{height:1px;background:var(--g100);margin:14px 0}
+.hidden{display:none !important}
+
+/* Risque travaux table */
+.risk-tbl{width:100%;border-collapse:collapse;font-size:.8rem}
+.risk-tbl th{background:var(--g50);padding:7px 10px;text-align:left;font-size:.68rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--g400)}
+.risk-tbl th:last-child,.risk-tbl td:last-child{text-align:center}
+.risk-tbl td{padding:7px 10px;border-top:1px solid var(--g100);vertical-align:middle}
+.risk-tbl .risk-iw{max-width:90px}
+.risk-tbl .risk-iw input{width:100%;padding:5px 28px 5px 8px;border:1.5px solid var(--g200);border-radius:6px;font-size:.8rem;outline:none}
+.risk-tbl .risk-iw input:focus{border-color:var(--blue-l)}
+
+/* Travaux except */
+.tx-row{display:grid;grid-template-columns:90px 130px 1fr;gap:8px;align-items:end;margin-bottom:8px}
+.tx-row:last-child{margin-bottom:0}
+.tx-row input[type=text]{width:100%;padding:8px 10px;border:1.5px solid var(--g200);border-radius:8px;font-size:.85rem;color:var(--g800);background:#fff;outline:none}
+.tx-row input[type=text]:focus{border-color:var(--blue-l);box-shadow:0 0 0 3px rgba(59,130,246,.12)}
+
+footer{text-align:center;padding-bottom:40px;font-size:.72rem;color:var(--g400);line-height:1.6}
+
+@media(max-width:700px){
+  .s-layout,.s2-layout,.grid2,.grid3,.kpi-row.k4,.kpi-row.k3{grid-template-columns:1fr}
+  .kpi-row.k2{grid-template-columns:1fr 1fr}
+  .tx-row{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+
+<header class="hdr">
+  <div class="hdr-top">
+    <div class="hdr-logo">🏠</div>
+    <div class="hdr-text">
+      <h1>EvalImmo</h1>
+      <p>Achat ou location ? Simulez votre projet immobilier en détail.</p>
+    </div>
+  </div>
+  <nav class="hdr-nav">
+    <ul>
+      <li><a href="#s1" class="active"><span class="n">1</span> Acquisition & financement</a></li>
+      <li><a href="#s2"><span class="n">2</span> Coût total de possession</a></li>
+      <li><a href="#s3"><span class="n">3</span> Scénario location</a></li>
+      <li><a href="#s4"><span class="n">4</span> Projection patrimoniale</a></li>
+    </ul>
+  </nav>
+</header>
+
+<div class="app">
+
+<!-- ══════════ SECTION 1 ══════════ -->
+<section class="sec" id="s1">
+  <div class="sec-hdr">
+    <div class="sec-num">1</div>
+    <div>
+      <h2>Acquisition & financement</h2>
+      <p>Renseignez le bien, le prêt et les charges annuelles pour calculer votre coût réel de possession.</p>
+    </div>
+  </div>
+
+  <div class="s-layout">
+    <!-- Col gauche -->
+    <div class="gap-sm">
+
+      <!-- Le bien -->
+      <div class="card">
+        <div class="card-t"><span class="ico">🏘️</span> Le bien</div>
+        <div class="card-b">
+          <div class="sub">Prix d'acquisition</div>
+          <div class="grid2" style="margin-bottom:10px">
+            <div class="field">
+              <label>Prix du bien (FAI) <span class="hint">hors parking</span></label>
+              <div class="iw"><input type="number" id="prixBien" placeholder="480 000" min="0" step="1000"><span class="u">€</span></div>
+            </div>
+            <div class="field">
+              <label>Parking séparé <span class="hint">si applicable</span></label>
+              <div class="iw"><input type="number" id="prixParking" placeholder="20 000" min="0" step="1000"><span class="u">€</span></div>
+            </div>
+          </div>
+          <div class="grid2" style="margin-bottom:10px">
+            <div class="field">
+              <label>Frais de notaire <span class="hint">auto ≈ 8 %</span></label>
+              <div class="iw"><input type="number" id="fraisNotaire" class="auto" placeholder="0" min="0" step="100"><span class="u">€</span></div>
+            </div>
+            <div class="field">
+              <label>Frais de dossier</label>
+              <div class="iw"><input type="number" id="fraisDossier" placeholder="850" min="0" step="50"><span class="u">€</span></div>
+            </div>
+          </div>
+          <div class="grid2" style="margin-bottom:10px">
+            <div class="field">
+              <label>Garantie crédit <span class="hint">auto ≈ 0,93 % capital</span></label>
+              <div class="iw"><input type="number" id="garantie" class="auto" placeholder="0" min="0" step="100"><span class="u">€</span></div>
+            </div>
+            <div class="field">
+              <label>Travaux</label>
+              <div class="iw"><input type="number" id="travaux" placeholder="0" min="0" step="1000"><span class="u">€</span></div>
+            </div>
+          </div>
+          <div class="field">
+            <label>Apport personnel</label>
+            <div class="iw"><input type="number" id="apport" placeholder="80 000" min="0" step="1000"><span class="u">€</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Financement -->
+      <div class="card">
+        <div class="card-t"><span class="ico">🏦</span> Financement</div>
+        <div class="card-b">
+          <div class="grid2" style="margin-bottom:10px">
+            <div class="field">
+              <label>Taux d'emprunt</label>
+              <div class="iw"><input type="number" id="taux" placeholder="3.50" min="0" max="15" step="0.05"><span class="u">%</span></div>
+            </div>
+            <div class="field">
+              <label>Durée</label>
+              <div class="iw"><input type="number" id="duree" placeholder="25" min="1" max="30" step="1"><span class="u">ans</span></div>
+            </div>
+          </div>
+          <div class="field">
+            <label>Taux assurance emprunteur <span class="hint">sur capital initial</span></label>
+            <div class="iw"><input type="number" id="txAss" placeholder="0.30" min="0" max="2" step="0.01"><span class="u">%/an</span></div>
+          </div>
+          <div class="sep"></div>
+          <table class="ctbl">
+            <tr><td>Montant emprunté</td><td id="r-emprunt">—</td></tr>
+            <tr><td>Mensualité (hors assurance)</td><td id="r-mens">—</td></tr>
+            <tr><td>Assurance mensuelle</td><td id="r-ass">—</td></tr>
+            <tr class="ttl hl"><td>Mensualité totale crédit</td><td id="r-menstot">—</td></tr>
+            <tr class="muted"><td>Coût total intérêts</td><td id="r-ints">—</td></tr>
+          </table>
+        </div>
+      </div>
+
+      <!-- Loyer alternatif projeté -->
+      <div class="card">
+        <div class="card-t"><span class="ico">🔑</span> Loyer alternatif projeté</div>
+        <div class="card-b">
+          <div class="info neutral" style="margin-bottom:12px">Que paieriez-vous si vous louiez plutôt ? Renseignez le budget de l'appartement équivalent au moment de l'acquisition.</div>
+          <div class="field">
+            <label>Loyer mensuel CC <span class="hint">tout compris, EDF inclus</span></label>
+            <div class="iw"><input type="number" id="loyerAlt" placeholder="1 800" min="0" step="50"><span class="u">€/mois</span></div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /col gauche -->
+
+    <!-- Col droite : Charges + risques -->
+    <div class="gap-sm">
+
+      <div class="card">
+        <div class="card-t"><span class="ico">📋</span> Charges annuelles</div>
+        <div class="card-b">
+
+          <div class="sub">Type d'immeuble</div>
+          <div class="tog-row">
+            <div class="tog-lbl">Copropriété ?<small>Active les champs charges de copro</small></div>
+            <label class="sw"><input type="checkbox" id="isCopro" checked><span class="sl"></span></label>
+          </div>
+
+          <div id="copro-section">
+            <div class="sep"></div>
+            <div class="sub">Charges de copropriété</div>
+            <div class="info neutral" style="margin-bottom:10px">Montants communiqués par le vendeur sur PV d'AG ou relevé de gérance.</div>
+
+            <!-- Période -->
+            <div class="field" style="margin-bottom:10px">
+              <label>Mode de saisie</label>
+              <div class="rbg">
+                <input type="radio" name="cpPeriode" id="cpp-an" value="annuel" checked><label for="cpp-an">Annuel</label>
+                <input type="radio" name="cpPeriode" id="cpp-trim" value="trimestre"><label for="cpp-trim">Dernier trimestre appelé</label>
+              </div>
+            </div>
+
+            <div id="cp-annuel" class="grid2" style="margin-bottom:10px">
+              <div class="field">
+                <label>Charges totales <span class="hint">budget prévisionnel</span></label>
+                <div class="iw"><input type="number" id="chargesTotal" placeholder="3 500" min="0" step="100"><span class="u">€/an</span></div>
+              </div>
+              <div class="field">
+                <label>dont récupérables <span class="hint">"locatif" ou "locatives"</span></label>
+                <div class="iw"><input type="number" id="chargesRecup" placeholder="1 200" min="0" step="100"><span class="u">€/an</span></div>
+              </div>
+            </div>
+
+            <div id="cp-trim" class="hidden grid2" style="margin-bottom:10px">
+              <div class="field">
+                <label>Total trimestre appelé</label>
+                <div class="iw"><input type="number" id="chargesTriTot" placeholder="875" min="0" step="50"><span class="u">€/trim.</span></div>
+              </div>
+              <div class="field">
+                <label>dont récupérables</label>
+                <div class="iw"><input type="number" id="chargesTriRecup" placeholder="300" min="0" step="25"><span class="u">€/trim.</span></div>
+              </div>
+            </div>
+            <div id="cp-trim-hint" class="info hidden" style="margin-bottom:10px;font-size:.74rem">Montants × 4 pour l'annuel — vérifiez si le dernier trimestre est représentatif du budget.</div>
+
+            <div class="sep"></div>
+            <div class="sub">Équipements collectifs</div>
+            <div class="tog-row">
+              <div class="tog-lbl">Eau chaude collective ?<small>Incluse dans les charges copro ci-dessus</small></div>
+              <label class="sw"><input type="checkbox" id="ecsColl"><span class="sl"></span></label>
+            </div>
+            <div class="tog-row">
+              <div class="tog-lbl">Chauffage collectif ?<small>Inclus dans les charges copro ci-dessus</small></div>
+              <label class="sw"><input type="checkbox" id="chauffColl"><span class="sl"></span></label>
+            </div>
+          </div>
+
+          <!-- Taxes -->
+          <div class="sep"></div>
+          <div class="sub">Taxes</div>
+          <div class="grid2" style="margin-bottom:10px">
+            <div class="field">
+              <label>Taxe foncière totale <span class="hint">TF + TEOM</span></label>
+              <div class="iw"><input type="number" id="tf" placeholder="1 400" min="0" step="50"><span class="u">€/an</span></div>
+            </div>
+            <div class="field">
+              <label>dont TEOM <span class="hint">récupérable / locataire</span></label>
+              <div class="iw"><input type="number" id="teom" placeholder="200" min="0" step="10"><span class="u">€/an</span></div>
+            </div>
+          </div>
+
+          <!-- Assurances & énergie -->
+          <div class="sep"></div>
+          <div class="sub">Assurance & énergie (propriétaire occupant)</div>
+          <div class="field" style="margin-bottom:10px">
+            <label>Assurance habitation <span class="hint">PNO si investissement, hab. si occupant</span></label>
+            <div class="iw"><input type="number" id="assHab" placeholder="300" min="0" step="10"><span class="u">€/an</span></div>
+          </div>
+          <div class="field" style="margin-bottom:10px">
+            <label>Électricité <span class="hint" id="edfHint">hors chauffage si collectif</span></label>
+            <div class="iw"><input type="number" id="edf" placeholder="1 200" min="0" step="50"><span class="u">€/an</span></div>
+          </div>
+          <div class="field" id="gazField">
+            <label>Gaz / Fioul</label>
+            <div class="iw"><input type="number" id="gaz" placeholder="800" min="0" step="50"><span class="u">€/an</span></div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Risque gros travaux copro -->
+      <div class="card" id="card-risque">
+        <div class="card-t"><span class="ico">⚠️</span> Risque gros travaux de copropriété</div>
+        <div class="card-b">
+          <div class="info warn" style="margin-bottom:12px">Renseignez l'ancienneté des derniers travaux pour évaluer le risque d'appel de fonds exceptionnel. En cas de doute, demandez au vendeur ou au syndic.</div>
+          <div style="overflow-x:auto">
+            <table class="risk-tbl" id="risk-table">
+              <thead>
+                <tr>
+                  <th>Type de travaux</th>
+                  <th>Fait il y a (ans)</th>
+                  <th>Délai estimé</th>
+                  <th>Risque</th>
+                </tr>
+              </thead>
+              <tbody id="risk-tbody"></tbody>
+            </table>
+          </div>
+          <div id="risk-summary" class="info hidden" style="margin-top:12px;margin-bottom:0"></div>
+        </div>
+      </div>
+
+      <!-- KPIs section 1 -->
+      <div class="kpi-row k2">
+        <div class="kpi kblue"><div class="kl">Mensualité totale</div><div class="kv" id="k-mens">—</div><div class="ks">crédit + assurance emprunteur</div></div>
+        <div class="kpi" id="k-delta-box"><div class="kl">Delta vs loyer alternatif</div><div class="kv" id="k-delta">—</div><div class="ks" id="k-delta-s">par mois</div></div>
+      </div>
+      <div class="kpi-row k2">
+        <div class="kpi"><div class="kl">Coût total projet</div><div class="kv" id="k-total">—</div><div class="ks">acquisition complète</div></div>
+        <div class="kpi"><div class="kl">Capital emprunté</div><div class="kv" id="k-emprunt">—</div><div class="ks" id="k-emprunt-s">—</div></div>
+      </div>
+    </div><!-- /col droite -->
+  </div>
+</section>
+
+<!-- ══════════ SECTION 2 — TCO ══════════ -->
+<section class="sec" id="s2">
+  <div class="sec-hdr">
+    <div class="sec-num">2</div>
+    <div>
+      <h2>Coût total de possession (TCO)</h2>
+      <p>Ce que vous dépensez réellement chaque mois en tant que propriétaire occupant, face au budget de location équivalent.</p>
+    </div>
+  </div>
+
+  <div class="s2-layout">
+    <div class="card">
+      <div class="card-t"><span class="ico">💰</span> Détail mensuel — propriétaire occupant</div>
+      <div class="card-b">
+        <table class="ctbl">
+          <tr class="cat"><td colspan="2">Crédit immobilier</td></tr>
+          <tr><td>Mensualité (capital + intérêts)</td><td id="t-mens">—</td></tr>
+          <tr><td>Assurance emprunteur</td><td id="t-ass">—</td></tr>
+          <tr class="cat"><td colspan="2">Charges de copropriété</td></tr>
+          <tr><td>Charges non récupérables</td><td id="t-copro-nr">—</td></tr>
+          <tr><td>Charges récupérables (pour info)</td><td id="t-copro-r">—</td></tr>
+          <tr class="cat"><td colspan="2">Taxes</td></tr>
+          <tr><td>TF nette (hors TEOM)</td><td id="t-tf-nette">—</td></tr>
+          <tr><td>TEOM</td><td id="t-teom">—</td></tr>
+          <tr class="cat"><td colspan="2">Assurance & énergie</td></tr>
+          <tr><td>Assurance habitation</td><td id="t-asshab">—</td></tr>
+          <tr><td>Électricité</td><td id="t-edf">—</td></tr>
+          <tr id="t-gaz-row"><td>Gaz / Fioul</td><td id="t-gaz">—</td></tr>
+          <tr class="ttl hl"><td>TCO mensuel total</td><td id="t-tco">—</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="gap-sm">
+      <div class="card">
+        <div class="card-t"><span class="ico">⚖️</span> Achat vs Location alternative</div>
+        <div class="card-b">
+          <table class="ctbl">
+            <tr class="cat"><td colspan="2">Si vous achetez</td></tr>
+            <tr><td>TCO mensuel (propriétaire occupant)</td><td id="c-tco">—</td></tr>
+            <tr class="cat"><td colspan="2">Si vous louez l'équivalent</td></tr>
+            <tr class="ttl"><td>Loyer mensuel CC tout compris</td><td id="c-loyer-alt">—</td></tr>
+            <tr><td colspan="2"><div class="sep" style="margin:6px 0"></div></td></tr>
+            <tr><td><strong id="c-delta-label">Surcoût mensuel achat</strong></td><td id="c-delta" style="font-weight:700">—</td></tr>
+            <tr class="muted"><td>Sur 1 an</td><td id="c-delta-an">—</td></tr>
+            <tr class="muted"><td>Sur 5 ans</td><td id="c-delta-5an">—</td></tr>
+            <tr class="muted"><td>Sur la durée du crédit</td><td id="c-delta-total">—</td></tr>
+          </table>
+        </div>
+      </div>
+
+      <div class="kpi-row k2">
+        <div class="kpi kblue"><div class="kl">TCO / mois</div><div class="kv" id="tco-kpi">—</div><div class="ks">propriétaire occupant</div></div>
+        <div class="kpi" id="delta-kpi-box"><div class="kl" id="delta-kpi-lbl">Surcoût achat</div><div class="kv" id="delta-kpi">—</div><div class="ks" id="delta-kpi-s">vs location alternative</div></div>
+      </div>
+      <div id="tco-info" class="info hidden"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ SECTION 3 — LOCATION ══════════ -->
+<section class="sec" id="s3">
+  <div class="sec-hdr">
+    <div class="sec-num">3</div>
+    <div>
+      <h2>Scénario : mise en location du bien</h2>
+      <p>Vous quittez le bien et le louez. En tant que bailleur, vous payez encore le crédit, la PNO, les charges non-récupérables — et votre propre loyer ailleurs.</p>
+    </div>
+  </div>
+
+  <div class="s2-layout">
+    <div class="card">
+      <div class="card-t"><span class="ico">🏠</span> Paramètres de location</div>
+      <div class="card-b">
+        <div class="sub">Loyer pratiqué</div>
+        <div class="field" style="margin-bottom:6px">
+          <label>Mode de saisie du loyer</label>
+          <div class="rbg">
+            <input type="radio" name="loyerLocType" id="llt-hc" value="hc" checked><label for="llt-hc">HC (hors charges)</label>
+            <input type="radio" name="loyerLocType" id="llt-cc" value="cc"><label for="llt-cc">CC (charges comprises)</label>
+          </div>
+        </div>
+        <div class="grid2" style="margin-bottom:10px">
+          <div class="field">
+            <label>Loyer mensuel <span class="hint" id="loyerLocHint">HC</span></label>
+            <div class="iw"><input type="number" id="loyerLoc" placeholder="1 800" min="0" step="50"><span class="u">€/mois</span></div>
+          </div>
+          <div class="field" id="loyerLocChargesField">
+            <label>Provision charges <span class="hint">en sus du HC</span></label>
+            <div class="iw"><input type="number" id="loyerLocCharges" placeholder="150" min="0" step="10"><span class="u">€/mois</span></div>
+          </div>
+        </div>
+        <div class="sep"></div>
+        <div class="sub">Risques & frais locatifs</div>
+        <div class="grid2" style="margin-bottom:10px">
+          <div class="field">
+            <label>Vacance locative <span class="hint">2 sem ≈ 4 %, 4 sem ≈ 8 %</span></label>
+            <div class="iw"><input type="number" id="vacance" placeholder="3" min="0" max="52" step="1"><span class="u">sem./an</span></div>
+          </div>
+          <div class="field">
+            <label>PNO <span class="hint">assurance proprio non-occupant</span></label>
+            <div class="iw"><input type="number" id="pno" placeholder="200" min="0" step="10"><span class="u">€/an</span></div>
+          </div>
+        </div>
+        <div class="field" style="margin-bottom:10px">
+          <label>Frais de gestion agence <span class="hint">0 si gestion directe</span></label>
+          <div class="iw"><input type="number" id="fraisGestion" placeholder="0" min="0" max="20" step="0.5"><span class="u">%/an</span></div>
+        </div>
+        <div class="sep"></div>
+        <div class="sub">Votre nouvelle situation (locataire RP)</div>
+        <div class="info neutral" style="margin-bottom:10px">En quittant le bien, vous devenez locataire ailleurs : vous payez un loyer ET une assurance habitation locataire (distincte de la PNO ci-dessus).</div>
+        <div class="grid2">
+          <div class="field">
+            <label>Votre loyer mensuel CC <span class="hint">nouvelle RP</span></label>
+            <div class="iw"><input type="number" id="loyerNouvRP" placeholder="1 800" min="0" step="50"><span class="u">€/mois</span></div>
+          </div>
+          <div class="field">
+            <label>Assurance hab. locataire <span class="hint">pour votre loc. RP</span></label>
+            <div class="iw"><input type="number" id="assHabLoc" placeholder="200" min="0" step="10"><span class="u">€/an</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="gap-sm">
+      <div class="card">
+        <div class="card-t"><span class="ico">📊</span> Compte de résultat bailleur / mois</div>
+        <div class="card-b">
+          <table class="ctbl">
+            <tr class="cat"><td colspan="2">Revenus locatifs</td></tr>
+            <tr class="pos"><td>Loyer HC encaissé</td><td id="l-loyer">—</td></tr>
+            <tr><td>— Vacance locative</td><td id="l-vacance">—</td></tr>
+            <tr><td>— Frais de gestion</td><td id="l-gestion">—</td></tr>
+            <tr class="ttl pos"><td>Loyer HC net perçu</td><td id="l-net">—</td></tr>
+            <tr class="cat"><td colspan="2">Charges du bailleur (bien loué)</td></tr>
+            <tr><td>Mensualité crédit + assurance</td><td id="l-credit">—</td></tr>
+            <tr><td>Charges non récupérables</td><td id="l-copro-nr">—</td></tr>
+            <tr><td>TF nette (hors TEOM récupéré)</td><td id="l-tf-nette">—</td></tr>
+            <tr><td>PNO</td><td id="l-pno">—</td></tr>
+            <tr class="cat"><td colspan="2">Votre vie locative (nouvelle RP)</td></tr>
+            <tr><td>Loyer mensuel CC nouvelle RP</td><td id="l-nouvrp">—</td></tr>
+            <tr><td>Assurance habitation locataire</td><td id="l-asshabloc">—</td></tr>
+            <tr class="ttl"><td>Total sorties mensuelles</td><td id="l-charges">—</td></tr>
+            <tr><td colspan="2"><div class="sep" style="margin:6px 0"></div></td></tr>
+            <tr class="ttl"><td>Cashflow net mensuel</td><td id="l-cf" style="font-size:.95rem">—</td></tr>
+          </table>
+        </div>
+      </div>
+
+      <div class="kpi-row k2">
+        <div class="kpi" id="l-cf-kpi-box"><div class="kl">Cashflow mensuel</div><div class="kv" id="l-cf-kpi">—</div><div class="ks" id="l-cf-ks">—</div></div>
+        <div class="kpi"><div class="kl">Rendement brut</div><div class="kv" id="l-rend">—</div><div class="ks">loyers annuels / coût total</div></div>
+      </div>
+      <div class="kpi-row k2">
+        <div class="kpi"><div class="kl">Rendement net</div><div class="kv" id="l-rend-net">—</div><div class="ks">après charges bailleur (hors RP)</div></div>
+        <div class="kpi"><div class="kl">Rendement / apport</div><div class="kv" id="l-rend-apport">—</div><div class="ks">cashflow annuel / apport</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ SECTION 4 — PROJECTION ══════════ -->
+<section class="sec" id="s4">
+  <div class="sec-hdr">
+    <div class="sec-num">4</div>
+    <div>
+      <h2>Projection patrimoniale</h2>
+      <p>Sur la durée du crédit, comparez la constitution de patrimoine via l'achat face à un placement alternatif de votre apport + surcoût mensuel.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-t"><span class="ico">⚙️</span> Hypothèses de projection</div>
+    <div class="card-b">
+      <div class="grid3" style="margin-bottom:16px">
+        <div class="field">
+          <label>Années en résidence principale <span class="hint">avant de louer ou vendre</span></label>
+          <div class="iw"><input type="number" id="anneesRp" placeholder="5" min="1" max="30" step="1"><span class="u">ans</span></div>
+        </div>
+        <div class="field">
+          <label>Appréciation annuelle du bien</label>
+          <div class="iw"><input type="number" id="appreciation" placeholder="1.5" min="-5" max="20" step="0.5"><span class="u">%/an</span></div>
+        </div>
+        <div class="field">
+          <label>Entretien courant estimé</label>
+          <div class="iw"><input type="number" id="travauxAn" placeholder="1 500" min="0" step="100"><span class="u">€/an</span></div>
+        </div>
+        <div class="field">
+          <label>Frais de vente <span class="hint">agence + diagnostics</span></label>
+          <div class="iw"><input type="number" id="fraisVente" placeholder="5.0" min="0" max="15" step="0.5"><span class="u">%</span></div>
+        </div>
+        <div class="field">
+          <label>Rendement placement alternatif <span class="hint">ex: livret A ~3 %, ETF ~5 %</span></label>
+          <div class="iw"><input type="number" id="rendAlt" placeholder="3.0" min="0" max="20" step="0.5"><span class="u">%/an</span></div>
+        </div>
+        <div class="field">
+          <label>Année de simulation <span class="hint">highlightée dans le tableau</span></label>
+          <div class="iw"><input type="number" id="anneeSimu" placeholder="10" min="1" max="30" step="1"><span class="u">an</span></div>
+        </div>
+      </div>
+
+      <div class="sep"></div>
+      <div class="sub">Travaux exceptionnels planifiés (appels de fonds copro, rénovation…)</div>
+      <div id="tx-except">
+        <div class="tx-row">
+          <div class="field"><label>Année</label><div class="iw"><input type="number" id="tx1-yr" placeholder="4" min="1" max="30"><span class="u">an</span></div></div>
+          <div class="field"><label>Montant</label><div class="iw"><input type="number" id="tx1-amt" placeholder="12 000" min="0" step="500"><span class="u">€</span></div></div>
+          <div class="field"><label>Description</label><input type="text" id="tx1-desc" placeholder="Ex : ravalement façade copro"></div>
+        </div>
+        <div class="tx-row">
+          <div class="field"><div class="iw"><input type="number" id="tx2-yr" placeholder="12" min="1" max="30"><span class="u">an</span></div></div>
+          <div class="field"><div class="iw"><input type="number" id="tx2-amt" placeholder="0" min="0" step="500"><span class="u">€</span></div></div>
+          <div class="field"><input type="text" id="tx2-desc" placeholder="Ex : réfection toiture"></div>
+        </div>
+        <div class="tx-row">
+          <div class="field"><div class="iw"><input type="number" id="tx3-yr" placeholder="20" min="1" max="30"><span class="u">an</span></div></div>
+          <div class="field"><div class="iw"><input type="number" id="tx3-amt" placeholder="0" min="0" step="500"><span class="u">€</span></div></div>
+          <div class="field"><input type="text" id="tx3-desc" placeholder="Ex : modernisation ascenseur"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-t"><span class="ico">📈</span> Évolution patrimoniale estimée</div>
+    <div class="chart-wrap"><canvas id="chart" height="280"></canvas></div>
+    <div class="chart-leg">
+      <div class="leg-i"><div class="leg-dot" style="background:#1d4ed8"></div> Valeur nette si vente (après remboursement + frais)</div>
+      <div class="leg-i"><div class="leg-dot" style="background:#16a34a"></div> Equity brute (valeur bien − dette)</div>
+      <div class="leg-i" style="color:var(--orange)"><div class="leg-dash"></div> Placement alternatif (apport + surcoût mensuel investis)</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-t"><span class="ico">📋</span> Tableau annuel</div>
+    <div class="ptbl-wrap">
+      <table class="ptbl">
+        <thead>
+          <tr>
+            <th>Année</th>
+            <th>Valeur bien</th>
+            <th>Capital restant</th>
+            <th>Equity brute</th>
+            <th>Net si vente</th>
+            <th>Intérêts cumulés</th>
+            <th>Charges + travaux</th>
+            <th>Placement alt.</th>
+            <th>Avantage achat</th>
+          </tr>
+        </thead>
+        <tbody id="proj-body">
+          <tr><td colspan="9" style="text-align:center;padding:24px;color:var(--g400);font-size:.8rem">Renseignez les paramètres pour voir la projection.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div id="final-kpis" class="hidden">
+    <div class="kpi-row k4">
+      <div class="kpi kblue"><div class="kl">Valeur bien à terme</div><div class="kv" id="f-valeur">—</div><div class="ks" id="f-valeur-s">—</div></div>
+      <div class="kpi kgreen"><div class="kl">Equity à terme</div><div class="kv" id="f-equity">—</div><div class="ks">valeur − dette</div></div>
+      <div class="kpi" id="f-avantage-box"><div class="kl">Avantage achat final</div><div class="kv" id="f-avantage">—</div><div class="ks">vs placement alternatif</div></div>
+      <div class="kpi"><div class="kl">Breakeven</div><div class="kv" id="f-breakeven">—</div><div class="ks">achat devient rentable</div></div>
+    </div>
+  </div>
+</section>
+
+</div>
+<footer>
+  Les calculs sont fournis à titre indicatif. Ils ne constituent pas un conseil financier ou fiscal.<br>
+  Consultez un professionnel avant toute décision d'investissement.
+</footer>
+
+<script>
+// ─── Helpers ───────────────────────────────────────────────────────────────
+const $ = id => document.getElementById(id);
+const get = id => { const e = $(id); return e ? (parseFloat(e.value) || 0) : 0; };
+const getText = id => { const e = $(id); return e ? (e.value || '') : ''; };
+
+function fmt(n, decimals = 0) {
+  const s = Math.abs(n).toLocaleString('fr-FR', { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
+  return (n < 0 ? '− ' : '') + s + ' €';
+}
+function fmtPct(n, decimals = 2) {
+  return (n >= 0 ? '+' : '− ') + Math.abs(n).toFixed(decimals) + ' %';
+}
+function fmtK(n) {
+  const a = Math.abs(n);
+  const s = n < 0 ? '−' : '';
+  if (a >= 1e6) return s + (a / 1e6).toFixed(1) + ' M€';
+  if (a >= 1e3) return s + (a / 1e3).toFixed(0) + ' k€';
+  return s + Math.round(a) + ' €';
+}
+function set(id, val) { const e = $(id); if (e) e.textContent = val; }
+
+function calcMensualite(capital, tauxAnnuel, dureeAns) {
+  if (capital <= 0 || dureeAns <= 0) return 0;
+  if (tauxAnnuel <= 0) return capital / (dureeAns * 12);
+  const r = tauxAnnuel / 100 / 12;
+  const n = dureeAns * 12;
+  return capital * r / (1 - Math.pow(1 + r, -n));
+}
+
+function buildAmort(capital, tauxAnnuel, dureeAns) {
+  const r = tauxAnnuel / 100 / 12;
+  const m = calcMensualite(capital, tauxAnnuel, dureeAns);
+  let restant = capital;
+  const data = [];
+  for (let yr = 1; yr <= dureeAns; yr++) {
+    let capYr = 0, intYr = 0;
+    for (let mo = 0; mo < 12; mo++) {
+      const i = restant * r;
+      const c = m - i;
+      intYr += i; capYr += c; restant -= c;
+      if (restant < 0) restant = 0;
+    }
+    data.push({ yr, capYr, intYr, restant: Math.max(0, restant) });
+  }
+  return data;
+}
+
+// ─── Gros travaux copro table ───────────────────────────────────────────────
+const TRAVAUX_TYPES = [
+  { id: 'ravalement', label: 'Ravalement de façade', cycle: 15 },
+  { id: 'toiture',    label: 'Toiture / étanchéité', cycle: 30 },
+  { id: 'isolation',  label: 'Isolation extérieure (ITE)', cycle: 30 },
+  { id: 'ascenseur',  label: 'Ascenseur (modernisation)', cycle: 20, coll: true },
+  { id: 'canalis',    label: 'Canalisations intérieures', cycle: 40 },
+  { id: 'chaudiere',  label: 'Chaudière / chauffage collectif', cycle: 25, chauffColl: true },
+];
+
+function buildRisqueTable() {
+  const tbody = $('risk-tbody');
+  tbody.innerHTML = TRAVAUX_TYPES.map(t => `
+    <tr id="rsk-row-${t.id}">
+      <td style="font-size:.79rem">${t.label}<br><span style="color:var(--g400);font-size:.7rem">cycle typ. ${t.cycle} ans</span></td>
+      <td>
+        <div class="risk-iw iw">
+          <input type="number" id="rsk-${t.id}" placeholder="?" min="0" max="60" step="1" oninput="updateRisque()">
+          <span class="u">ans</span>
+        </div>
+      </td>
+      <td id="rsk-delay-${t.id}" style="font-size:.78rem;color:var(--g500)">—</td>
+      <td id="rsk-badge-${t.id}" style="font-size:.75rem;white-space:nowrap">—</td>
+    </tr>
+  `).join('');
+}
+
+function updateRisque() {
+  let highRisk = 0;
+  TRAVAUX_TYPES.forEach(t => {
+    const row = $(`rsk-row-${t.id}`);
+    if (!row) return;
+    const val = parseFloat($(`rsk-${t.id}`)?.value);
+    if (isNaN(val) || val === '') {
+      set(`rsk-delay-${t.id}`, '?');
+      set(`rsk-badge-${t.id}`, '⚪ non renseigné');
+      $(`rsk-badge-${t.id}`).style.color = 'var(--g400)';
+      return;
+    }
+    const remaining = t.cycle - val;
+    set(`rsk-delay-${t.id}`, remaining <= 0 ? 'À prévoir' : `~${remaining} ans`);
+    let badge, color;
+    if (remaining <= 0)       { badge = '🔴 À prévoir';     color = 'var(--red)';    highRisk++; }
+    else if (remaining <= 5)  { badge = '🔴 Risque élevé';  color = 'var(--red)';    highRisk++; }
+    else if (remaining <= 10) { badge = '🟡 Risque modéré'; color = 'var(--orange)'; }
+    else                      { badge = '🟢 Faible risque'; color = 'var(--green)';  }
+    set(`rsk-badge-${t.id}`, badge);
+    $(`rsk-badge-${t.id}`).style.color = color;
+  });
+  const sumEl = $('risk-summary');
+  if (highRisk > 0) {
+    sumEl.className = 'info warn';
+    sumEl.textContent = `⚠️ ${highRisk} poste(s) à risque élevé identifié(s). Demandez les PV d'AG des 5 dernières années au vendeur pour vérifier les votes de travaux et les provisions au fonds de réserve.`;
+    sumEl.classList.remove('hidden');
+  } else {
+    sumEl.classList.add('hidden');
+  }
+  recalc();
+}
+
+// ─── Main calculate ─────────────────────────────────────────────────────────
+let lastProjData = null;
+
+function recalc() {
+  // 1. Acquisition
+  const prixBien     = get('prixBien');
+  const prixParking  = get('prixParking');
+  const fraisNotaire = get('fraisNotaire');
+  const fraisDossier = get('fraisDossier');
+  const garantie     = get('garantie');
+  const travaux      = get('travaux');
+  const apport       = get('apport');
+  const coutTotal    = prixBien + prixParking + fraisNotaire + fraisDossier + garantie + travaux;
+  const emprunt      = Math.max(0, coutTotal - apport);
+
+  // 2. Financement
+  const taux       = get('taux');
+  const duree      = get('duree');
+  const txAss      = get('txAss');
+  const mensCredit = calcMensualite(emprunt, taux, duree);
+  const assMens    = emprunt * txAss / 100 / 12;
+  const mensTot    = mensCredit + assMens;
+  const coutInts   = mensCredit * duree * 12 - emprunt;
+
+  set('r-emprunt', fmt(emprunt));
+  set('r-mens',    fmt(mensCredit, 2));
+  set('r-ass',     fmt(assMens, 2));
+  set('r-menstot', fmt(mensTot, 2));
+  set('r-ints',    fmt(coutInts));
+
+  // 3. Charges
+  const isCopro   = $('isCopro').checked;
+  const isTrim    = isCopro && document.querySelector('[name=cpPeriode]:checked')?.value === 'trimestre';
+  const chargesTot  = isCopro ? (isTrim ? get('chargesTriTot') * 4 : get('chargesTotal')) : 0;
+  const chargesRecup = isCopro ? Math.min(isTrim ? get('chargesTriRecup') * 4 : get('chargesRecup'), chargesTot) : 0;
+  const chargesNR   = chargesTot - chargesRecup;
+
+  const tfTotale  = get('tf');
+  const teom      = Math.min(get('teom'), tfTotale);
+  const tfNette   = tfTotale - teom;
+  const assHab    = get('assHab');
+  const edf       = get('edf');
+  const chauffColl = $('chauffColl').checked;
+  const gaz       = chauffColl ? 0 : get('gaz');
+
+  // TCO owner-occupant : paie TOUT (TF totale, charges NR + R pour soi)
+  const chargesAnnProprio = chargesNR + tfTotale + assHab + edf + gaz;
+  // Note: propriétaire occupant paie aussi les charges récup (pour lui-même)
+  // Le TCO réel inclut donc chargesNR + chargesRecup + TF + assHab + EDF + gaz
+  const tcoCharges = chargesTot + tfTotale + assHab + edf + gaz; // tout compris quand on habite
+  const tco = mensTot + tcoCharges / 12;
+
+  // 4. Loyer alternatif
+  const loyerAlt    = get('loyerAlt');
+  const coutLocMens = loyerAlt;
+  const delta = tco - coutLocMens;
+
+  // KPIs section 1
+  set('k-mens', fmt(mensTot, 0));
+  set('k-total', fmt(coutTotal));
+  set('k-emprunt', fmt(emprunt));
+  set('k-emprunt-s', (apport > 0 && coutTotal > 0) ? `apport ${Math.round(apport / coutTotal * 100)} %` : '—');
+  set('k-delta', (delta >= 0 ? '+' : '− ') + fmt(Math.abs(delta), 0));
+  set('k-delta-s', delta >= 0 ? 'de plus que louer' : 'de moins que louer');
+  $('k-delta-box').className = 'kpi ' + (delta > 0 ? 'kred' : delta < 0 ? 'kgreen' : '');
+
+  // Section 2 — TCO détail
+  set('t-mens',      fmt(mensCredit, 2));
+  set('t-ass',       fmt(assMens, 2));
+  set('t-copro-nr',  isCopro ? fmt(chargesNR / 12, 0) : '—');
+  set('t-copro-r',   isCopro ? fmt(chargesRecup / 12, 0) : '—');
+  set('t-tf-nette',  fmt(tfNette / 12, 0));
+  set('t-teom',      fmt(teom / 12, 0));
+  set('t-asshab',    fmt(assHab / 12, 0));
+  set('t-edf',       fmt(edf / 12, 0));
+  set('t-gaz',       fmt(gaz / 12, 0));
+  $('t-gaz-row').classList.toggle('hidden', chauffColl);
+  set('t-tco', fmt(tco, 0));
+
+  set('c-tco',       fmt(tco, 0));
+  set('c-loyer-alt', fmt(loyerAlt, 0));
+  set('c-delta',     (delta >= 0 ? '+' : '− ') + fmt(Math.abs(delta), 0));
+  set('c-delta-an',  (delta >= 0 ? '+' : '− ') + fmt(Math.abs(delta) * 12));
+  set('c-delta-5an', (delta >= 0 ? '+' : '− ') + fmt(Math.abs(delta) * 60));
+  set('c-delta-total', duree > 0 ? (delta >= 0 ? '+' : '− ') + fmt(Math.abs(delta) * 12 * duree) : '—');
+  $('c-delta').style.color = delta > 0 ? 'var(--red)' : delta < 0 ? 'var(--green)' : '';
+  set('c-delta-label', delta >= 0 ? 'Surcoût mensuel achat' : 'Économie mensuelle achat');
+
+  set('tco-kpi', fmt(tco, 0));
+  set('delta-kpi', (delta >= 0 ? '+' : '− ') + fmt(Math.abs(delta), 0));
+  set('delta-kpi-s', delta >= 0 ? 'de plus que louer/mois' : 'de moins que louer/mois');
+  set('delta-kpi-lbl', delta >= 0 ? 'Surcoût achat' : 'Économie achat');
+  $('delta-kpi-box').className = 'kpi ' + (delta > 0 ? 'kred' : delta < 0 ? 'kgreen' : '');
+
+  const infoEl = $('tco-info');
+  if (tco > 0 && coutLocMens > 0) {
+    infoEl.classList.remove('hidden');
+    if (delta > 0) {
+      infoEl.className = 'info warn';
+      infoEl.textContent = `Acheter coûte ${fmt(delta, 0)}/mois de plus que louer (+${fmt(delta * 12)}/an). Ce surcoût, s'il était investi, est intégré dans la comparaison patrimoniale (section 4).`;
+    } else {
+      infoEl.className = 'info good';
+      infoEl.textContent = `Acheter est moins cher que louer de ${fmt(Math.abs(delta), 0)}/mois. Vous constituez du patrimoine tout en dépensant moins — situation favorable.`;
+    }
+  } else {
+    infoEl.classList.add('hidden');
+  }
+
+  // Section 3 — Location
+  const isHC = document.querySelector('[name=loyerLocType]:checked')?.value === 'hc';
+  const loyerLocSaisi = get('loyerLoc');
+  const loyerLocChargesMens = isHC ? get('loyerLocCharges') : 0;
+  // En CC: on estime le HC en retirant la provision charges récupérables
+  const loyerLocHC = isHC ? loyerLocSaisi : loyerLocSaisi - (chargesRecup + teom) / 12;
+
+  const vacanceSem  = get('vacance');
+  const vacancePct  = vacanceSem / 52;
+  const pno         = get('pno');
+  const fraisGest   = get('fraisGestion') / 100;
+  const loyerNouvRP = get('loyerNouvRP');
+  const assHabLoc   = get('assHabLoc');
+
+  const loyerBrutAn = loyerLocHC * 12;
+  const vacanceAn   = loyerBrutAn * vacancePct;
+  const gestionAn   = (loyerBrutAn - vacanceAn) * fraisGest;
+  const loyerNetAn  = loyerBrutAn - vacanceAn - gestionAn;
+  const loyerNetMens = loyerNetAn / 12;
+
+  // Charges bailleur : crédit + charges NR + TF nette + PNO + vie locative
+  const chargesBailleurBien = mensTot + chargesNR / 12 + tfNette / 12 + pno / 12;
+  const chargesBailleurVie  = loyerNouvRP + assHabLoc / 12;
+  const chargesBailleurTot  = chargesBailleurBien + chargesBailleurVie;
+  const cashflowMens = loyerNetMens - chargesBailleurTot;
+
+  set('l-loyer',      fmt(loyerLocHC, 0));
+  set('l-vacance',    '− ' + fmt(vacanceAn / 12, 0));
+  set('l-gestion',    '− ' + fmt(gestionAn / 12, 0));
+  set('l-net',        fmt(loyerNetMens, 0));
+  set('l-credit',     '− ' + fmt(mensTot, 2));
+  set('l-copro-nr',   '− ' + fmt(chargesNR / 12, 0));
+  set('l-tf-nette',   '− ' + fmt(tfNette / 12, 0));
+  set('l-pno',        '− ' + fmt(pno / 12, 0));
+  set('l-nouvrp',     '− ' + fmt(loyerNouvRP, 0));
+  set('l-asshabloc',  '− ' + fmt(assHabLoc / 12, 0));
+  set('l-charges',    '− ' + fmt(chargesBailleurTot, 0));
+  const lCfEl = $('l-cf');
+  if (lCfEl) {
+    lCfEl.textContent = (cashflowMens >= 0 ? '+' : '− ') + fmt(Math.abs(cashflowMens), 0);
+    lCfEl.style.color = cashflowMens >= 0 ? 'var(--green)' : 'var(--red)';
+  }
+  $('l-cf-kpi-box').className = 'kpi ' + (cashflowMens >= 0 ? 'kgreen' : 'kred');
+  set('l-cf-kpi', (cashflowMens >= 0 ? '+' : '− ') + fmt(Math.abs(cashflowMens), 0));
+  set('l-cf-ks', cashflowMens >= 0 ? 'positif — vous encaissez' : 'effort mensuel bailleur');
+
+  const rendBrut = coutTotal > 0 ? (loyerBrutAn / coutTotal) * 100 : 0;
+  const rendNet  = coutTotal > 0 ? ((loyerNetAn - chargesNR - tfNette - pno) / coutTotal) * 100 : 0;
+  const rendApport = apport > 0 ? ((loyerNetMens - chargesBailleurBien) * 12 / apport) * 100 : null;
+  set('l-rend',       rendBrut > 0 ? rendBrut.toFixed(2) + ' %' : '—');
+  set('l-rend-net',   rendNet > 0 ? rendNet.toFixed(2) + ' %' : (rendNet < 0 ? rendNet.toFixed(2) + ' %' : '—'));
+  set('l-rend-apport', rendApport !== null ? fmtPct(rendApport) : '—');
+
+  // Section 4 — Projection
+  const anneesRp     = Math.min(get('anneesRp') || duree, duree || 25);
+  const apprecPct    = get('appreciation') / 100;
+  const travauxAnVal = get('travauxAn');
+  const fraisVentePct = get('fraisVente') / 100;
+  const rendAlt      = get('rendAlt') / 100;
+  const anneeSimu    = Math.min(get('anneeSimu') || (duree || 25), duree || 25);
+
+  // Travaux exceptionnels
+  const txExcept = [1, 2, 3].map(i => ({
+    yr:  parseInt($(`tx${i}-yr`)?.value) || 0,
+    amt: parseFloat($(`tx${i}-amt`)?.value) || 0,
+    desc: getText(`tx${i}-desc`),
+  })).filter(t => t.yr > 0 && t.amt > 0);
+
+  const amort = buildAmort(emprunt, taux, duree || 25);
+
+  // delta = TCO - coût location (positif = acheter coûte plus)
+  const suroMens = delta;
+
+  const projRows = [];
+  let cumulInts = 0, cumulCharges = 0;
+
+  for (let yr = 1; yr <= (duree || 25); yr++) {
+    const a = amort[yr - 1] || { intYr: 0, capYr: 0, restant: 0 };
+    cumulInts += a.intYr;
+    const txEx = txExcept.filter(t => t.yr === yr).reduce((s, t) => s + t.amt, 0);
+    cumulCharges += tcoCharges + travauxAnVal + txEx;
+
+    const valeurBien = (prixBien + prixParking) * Math.pow(1 + apprecPct, yr);
+    const equity     = valeurBien - a.restant;
+    const netVente   = valeurBien * (1 - fraisVentePct) - a.restant;
+
+    // Placement alternatif
+    const apportAlt = apport * Math.pow(1 + rendAlt, yr);
+    let surAlt = 0;
+    if (suroMens > 0 && rendAlt > 0) {
+      const rM = rendAlt / 12, n = yr * 12;
+      surAlt = suroMens * (Math.pow(1 + rM, n) - 1) / rM;
+    }
+    const placementAlt = apportAlt + surAlt;
+    const avantage = netVente - placementAlt;
+    const hasTxEx = txEx > 0;
+
+    projRows.push({ yr, valeurBien, restant: a.restant, equity, netVente, cumulInts, cumulCharges, placementAlt, avantage, hasTxEx, txEx });
+  }
+  lastProjData = projRows;
+
+  const tbody = $('proj-body');
+  if (!projRows.length || prixBien === 0) {
+    tbody.innerHTML = '<tr><td colspan="9" style="text-align:center;padding:24px;color:var(--g400);font-size:.8rem">Renseignez les paramètres pour voir la projection.</td></tr>';
+  } else {
+    tbody.innerHTML = projRows.map(r => {
+      const hl = r.yr === anneeSimu;
+      const avCls = r.avantage > 0 ? 'pos' : 'neg';
+      const txNote = r.hasTxEx ? ` <span style="color:var(--orange);font-size:.7rem" title="Travaux ${r.txEx.toLocaleString('fr-FR')} €">⚠</span>` : '';
+      return `<tr class="${hl ? 'yr-hl' : r.hasTxEx ? 'travaux-yr' : ''}">
+        <td>Année ${r.yr}${hl ? ' ★' : ''}${txNote}</td>
+        <td>${fmt(r.valeurBien)}</td>
+        <td>${fmt(r.restant)}</td>
+        <td>${fmt(r.equity)}</td>
+        <td class="${r.netVente > 0 ? 'pos' : 'neg'}">${fmt(r.netVente)}</td>
+        <td>${fmt(r.cumulInts)}</td>
+        <td>${fmt(r.cumulCharges)}</td>
+        <td>${fmt(r.placementAlt)}</td>
+        <td class="${avCls}">${r.avantage > 0 ? '+' : '− '}${fmt(Math.abs(r.avantage))}</td>
+      </tr>`;
+    }).join('');
+  }
+
+  if (projRows.length) {
+    $('final-kpis').classList.remove('hidden');
+    const last = projRows[projRows.length - 1];
+    set('f-valeur',   fmt(last.valeurBien));
+    set('f-valeur-s', `à ${duree || 25} ans (appréc. ${get('appreciation')} %/an)`);
+    set('f-equity',   fmt(last.equity));
+    set('f-avantage', (last.avantage > 0 ? '+' : '− ') + fmt(Math.abs(last.avantage)));
+    $('f-avantage-box').className = 'kpi ' + (last.avantage > 0 ? 'kgreen' : 'kred');
+    const be = projRows.find(r => r.avantage > 0);
+    set('f-breakeven', be ? `Année ${be.yr}` : `> ${duree || 25} ans`);
+  }
+
+  drawChart(projRows, anneeSimu);
+}
+
+// ─── Chart ──────────────────────────────────────────────────────────────────
+function drawChart(rows, anneeSimu) {
+  const canvas = $('chart');
+  if (!canvas) return;
+  const dpr = window.devicePixelRatio || 1;
+  const W = Math.max(300, canvas.parentElement.clientWidth - 36);
+  const H = 280;
+  canvas.width  = W * dpr;
+  canvas.height = H * dpr;
+  canvas.style.width  = W + 'px';
+  canvas.style.height = H + 'px';
+  const ctx = canvas.getContext('2d');
+  ctx.scale(dpr, dpr);
+  ctx.clearRect(0, 0, W, H);
+
+  if (!rows || rows.length < 2) {
+    ctx.fillStyle = '#94a3b8';
+    ctx.font = '13px -apple-system,sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('Renseignez les paramètres pour afficher le graphique.', W / 2, H / 2);
+    return;
+  }
+
+  const PAD = { top: 18, right: 24, bottom: 36, left: 78 };
+  const cW = W - PAD.left - PAD.right;
+  const cH = H - PAD.top - PAD.bottom;
+
+  const allVals = rows.flatMap(r => [r.netVente, r.equity, r.placementAlt]).filter(isFinite);
+  const minV = Math.min(0, ...allVals);
+  const maxV = Math.max(...allVals, 1);
+  const range = maxV - minV;
+
+  const sx = i => PAD.left + (i / (rows.length - 1)) * cW;
+  const sy = v => PAD.top + cH - ((v - minV) / range) * cH;
+
+  // Grid
+  ctx.strokeStyle = '#e2e8f0'; ctx.lineWidth = 1;
+  for (let i = 0; i <= 5; i++) {
+    const y = PAD.top + (i / 5) * cH;
+    ctx.beginPath(); ctx.moveTo(PAD.left, y); ctx.lineTo(PAD.left + cW, y); ctx.stroke();
+    ctx.fillStyle = '#94a3b8'; ctx.font = '10px -apple-system,sans-serif'; ctx.textAlign = 'right';
+    ctx.fillText(fmtK(maxV - (i / 5) * range), PAD.left - 6, y + 4);
+  }
+  if (minV < 0) {
+    const y0 = sy(0);
+    ctx.strokeStyle = '#cbd5e1'; ctx.lineWidth = 1.5; ctx.setLineDash([4, 4]);
+    ctx.beginPath(); ctx.moveTo(PAD.left, y0); ctx.lineTo(PAD.left + cW, y0); ctx.stroke();
+    ctx.setLineDash([]);
+  }
+  ctx.fillStyle = '#94a3b8'; ctx.textAlign = 'center';
+  const step = Math.max(1, Math.floor(rows.length / 8));
+  rows.forEach((r, i) => {
+    if (i % step === 0 || i === rows.length - 1) ctx.fillText('An ' + r.yr, sx(i), PAD.top + cH + 22);
+  });
+
+  // Marker année simulée
+  const simuIdx = Math.min(anneeSimu - 1, rows.length - 1);
+  if (simuIdx >= 0) {
+    ctx.strokeStyle = '#94a3b8'; ctx.lineWidth = 1; ctx.setLineDash([3, 3]);
+    ctx.beginPath(); ctx.moveTo(sx(simuIdx), PAD.top); ctx.lineTo(sx(simuIdx), PAD.top + cH); ctx.stroke();
+    ctx.setLineDash([]);
+  }
+
+  // Markers travaux exceptionnels
+  rows.forEach((r, i) => {
+    if (r.hasTxEx) {
+      ctx.strokeStyle = 'rgba(180,83,9,.35)'; ctx.lineWidth = 1.5;
+      ctx.beginPath(); ctx.moveTo(sx(i), PAD.top); ctx.lineTo(sx(i), PAD.top + cH); ctx.stroke();
+    }
+  });
+
+  function drawLine(vals, color, dash = []) {
+    ctx.beginPath(); ctx.strokeStyle = color; ctx.lineWidth = 2.5; ctx.setLineDash(dash);
+    vals.forEach((v, i) => { i === 0 ? ctx.moveTo(sx(i), sy(v)) : ctx.lineTo(sx(i), sy(v)); });
+    ctx.stroke(); ctx.setLineDash([]);
+  }
+
+  // Fill equity area
+  ctx.beginPath();
+  ctx.moveTo(sx(0), sy(rows[0].equity));
+  rows.forEach((r, i) => ctx.lineTo(sx(i), sy(r.equity)));
+  ctx.lineTo(sx(rows.length - 1), sy(Math.max(minV, 0)));
+  ctx.lineTo(sx(0), sy(Math.max(minV, 0)));
+  ctx.closePath();
+  ctx.fillStyle = 'rgba(22,163,74,.05)';
+  ctx.fill();
+
+  drawLine(rows.map(r => r.netVente),     '#1d4ed8');
+  drawLine(rows.map(r => r.equity),       '#16a34a');
+  drawLine(rows.map(r => r.placementAlt), '#d97706', [7, 4]);
+
+  // Dots année simulée
+  [
+    { arr: rows.map(r => r.netVente),     c: '#1d4ed8' },
+    { arr: rows.map(r => r.equity),       c: '#16a34a' },
+    { arr: rows.map(r => r.placementAlt), c: '#d97706' },
+  ].forEach(({ arr, c }) => {
+    if (simuIdx >= 0 && simuIdx < arr.length) {
+      ctx.beginPath();
+      ctx.arc(sx(simuIdx), sy(arr[simuIdx]), 5, 0, Math.PI * 2);
+      ctx.fillStyle = c; ctx.fill();
+      ctx.strokeStyle = '#fff'; ctx.lineWidth = 2; ctx.stroke();
+    }
+  });
+}
+
+// ─── Auto-fill & conditional display ────────────────────────────────────────
+function updateGarantie() {
+  const emprunt = Math.max(0, (get('prixBien') + get('prixParking') +
+    get('fraisNotaire') + get('fraisDossier') + get('travaux')) - get('apport'));
+  if (emprunt > 0 && !$('garantie')._touched) {
+    $('garantie').value = Math.round(emprunt * 0.0093);
+    $('garantie').classList.add('auto');
+  }
+}
+
+$('prixBien').addEventListener('input', () => {
+  const v = parseFloat($('prixBien').value) || 0;
+  if (v > 0 && !$('fraisNotaire')._touched) {
+    $('fraisNotaire').value = Math.round(v * 0.08);
+  }
+  updateGarantie();
+  recalc();
+});
+['prixParking','fraisDossier','travaux','apport'].forEach(id => {
+  $(id)?.addEventListener('input', () => { updateGarantie(); recalc(); });
+});
+
+$('fraisNotaire').addEventListener('input', () => { $('fraisNotaire')._touched = true; updateGarantie(); recalc(); });
+$('garantie').addEventListener('input', () => { $('garantie')._touched = true; $('garantie').classList.remove('auto'); recalc(); });
+
+$('isCopro').addEventListener('change', () => {
+  $('copro-section').classList.toggle('hidden', !$('isCopro').checked);
+  $('card-risque').classList.toggle('hidden', !$('isCopro').checked);
+  recalc();
+});
+
+document.querySelectorAll('[name=cpPeriode]').forEach(r => r.addEventListener('change', () => {
+  const isTrim = document.querySelector('[name=cpPeriode]:checked').value === 'trimestre';
+  $('cp-annuel').classList.toggle('hidden', isTrim);
+  $('cp-trim').classList.toggle('hidden', !isTrim);
+  $('cp-trim-hint').classList.toggle('hidden', !isTrim);
+  recalc();
+}));
+
+$('chauffColl').addEventListener('change', () => {
+  $('gazField').classList.toggle('hidden', $('chauffColl').checked);
+  $('edfHint').textContent = $('chauffColl').checked ? 'hors chauffage (collectif)' : 'dont chauffage';
+  recalc();
+});
+
+document.querySelectorAll('[name=loyerLocType]').forEach(r => r.addEventListener('change', () => {
+  const isHC = document.querySelector('[name=loyerLocType]:checked').value === 'hc';
+  // HC → afficher le champ charges (provision en sus du HC)
+  // CC → masquer (charges incluses)
+  $('loyerLocChargesField').classList.toggle('hidden', !isHC);
+  set('loyerLocHint', isHC ? 'HC' : 'CC');
+  recalc();
+}));
+
+// ─── Wire all inputs ─────────────────────────────────────────────────────────
+const allInputs = ['taux','duree','txAss','chargesTotal','chargesRecup',
+  'chargesTriTot','chargesTriRecup','tf','teom','assHab','edf','gaz',
+  'loyerAlt','loyerLoc','loyerLocCharges','vacance','pno',
+  'fraisGestion','loyerNouvRP','assHabLoc',
+  'anneesRp','appreciation','travauxAn','fraisVente','rendAlt','anneeSimu',
+  'tx1-yr','tx1-amt','tx1-desc','tx2-yr','tx2-amt','tx2-desc','tx3-yr','tx3-amt','tx3-desc'];
+allInputs.forEach(id => { const el = $(id); if (el) el.addEventListener('input', recalc); });
+$('ecsColl').addEventListener('change', recalc);
+$('chauffColl').addEventListener('change', recalc);
+
+// Scroll spy
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      document.querySelectorAll('.hdr-nav a').forEach(a => a.classList.remove('active'));
+      const a = document.querySelector(`.hdr-nav a[href="#${e.target.id}"]`);
+      if (a) a.classList.add('active');
+    }
+  });
+}, { rootMargin: '-40% 0px -55% 0px' });
+['s1','s2','s3','s4'].forEach(id => { const el = $(id); if (el) observer.observe(el); });
+
+window.addEventListener('resize', () => { if (lastProjData) drawChart(lastProjData, get('anneeSimu')); });
+
+// ─── Init ────────────────────────────────────────────────────────────────────
+buildRisqueTable();
+$('fraisDossier').value = 850;
+$('txAss').value = 0.30;
+$('vacance').value = 3;
+$('pno').value = 200;
+$('assHabLoc').value = 200;
+$('appreciation').value = 1.5;
+$('travauxAn').value = 1500;
+$('fraisVente').value = 5;
+$('rendAlt').value = 3;
+$('anneesRp').value = 5;
+$('anneeSimu').value = 10;
+recalc();
+</script>
+</body>
+</html>
