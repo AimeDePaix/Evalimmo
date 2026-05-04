@@ -33,6 +33,38 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .hdr-nav .active .n{background:#60a5fa;color:#0f172a}
 
 .app{max-width:1000px;margin:28px auto 80px;padding:0 16px}
+
+/* ─── Landing & modules ─── */
+.landing{max-width:1000px;margin:40px auto 80px;padding:0 20px}
+.landing-intro{text-align:center;margin-bottom:36px}
+.landing-intro h2{font-size:1.6rem;font-weight:800;color:var(--g900);letter-spacing:-.4px}
+.landing-intro p{font-size:.95rem;color:var(--g500);margin-top:8px;max-width:620px;margin-left:auto;margin-right:auto;line-height:1.5}
+.mod-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px}
+.mod-card{background:#fff;border-radius:var(--r);box-shadow:var(--sh);padding:24px;border:2px solid transparent;cursor:pointer;transition:transform .15s,border-color .15s,box-shadow .15s;display:flex;flex-direction:column;gap:10px;text-align:left}
+.mod-card:hover{transform:translateY(-2px);border-color:var(--blue-l);box-shadow:0 4px 12px rgba(0,0,0,.08),0 12px 32px rgba(29,78,216,.12)}
+.mod-card.disabled{cursor:not-allowed;opacity:.55}
+.mod-card.disabled:hover{transform:none;border-color:transparent;box-shadow:var(--sh)}
+.mod-ico{font-size:2.2rem;line-height:1}
+.mod-title{font-size:1.05rem;font-weight:700;color:var(--g900)}
+.mod-desc{font-size:.82rem;color:var(--g500);line-height:1.45;flex:1}
+.mod-cta{font-size:.78rem;font-weight:600;color:var(--blue);margin-top:6px}
+.mod-card.disabled .mod-cta{color:var(--g400)}
+.mod-badge{position:absolute;top:14px;right:14px;font-size:.62rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;background:var(--g100);color:var(--g500);padding:3px 8px;border-radius:99px}
+.mod-card{position:relative}
+.mod-badge.soon{background:var(--orange-pale);color:var(--orange)}
+.mod-badge.live{background:var(--green-pale);color:var(--green)}
+
+.back-bar{max-width:1000px;margin:0 auto;padding:12px 20px 0;display:flex;align-items:center}
+.back-link{display:inline-flex;align-items:center;gap:6px;font-size:.8rem;font-weight:600;color:var(--g500);text-decoration:none;background:#fff;border:1px solid var(--g200);padding:6px 12px;border-radius:8px;transition:color .15s,border-color .15s}
+.back-link:hover{color:var(--blue);border-color:var(--blue-l)}
+
+.stub{max-width:760px;margin:60px auto;padding:40px 24px;text-align:center;background:#fff;border-radius:var(--r);box-shadow:var(--sh)}
+.stub-ico{font-size:3rem;margin-bottom:12px}
+.stub h2{font-size:1.4rem;font-weight:800;color:var(--g900);margin-bottom:10px}
+.stub p{color:var(--g500);font-size:.9rem;line-height:1.5;max-width:520px;margin:0 auto 16px}
+.stub ul{text-align:left;max-width:520px;margin:18px auto;font-size:.85rem;color:var(--g600);line-height:1.7}
+.stub ul li{padding-left:8px}
+.stub-tag{display:inline-block;background:var(--orange-pale);color:var(--orange);font-size:.72rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:4px 10px;border-radius:99px;margin-bottom:14px}
 .sec-hdr{display:flex;align-items:flex-start;gap:12px;margin-bottom:14px}
 .sec-num{width:28px;height:28px;background:var(--blue);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:800;flex-shrink:0;margin-top:2px}
 .sec-hdr h2{font-size:1rem;font-weight:700;color:var(--g900)}
@@ -162,11 +194,11 @@ footer{text-align:center;padding-bottom:40px;font-size:.72rem;color:var(--g400);
   <div class="hdr-top">
     <div class="hdr-logo">🏠</div>
     <div class="hdr-text">
-      <h1>EvalImmo</h1>
-      <p>Achat ou location ? Simulez votre projet immobilier en détail.</p>
+      <h1 id="hdr-title">EvalImmo</h1>
+      <p id="hdr-subtitle">Outils d'évaluation immobilière pour particuliers.</p>
     </div>
   </div>
-  <nav class="hdr-nav">
+  <nav class="hdr-nav" id="hdr-nav-a" style="display:none">
     <ul>
       <li><a href="#s1" class="active"><span class="n">1</span> Acquisition & financement</a></li>
       <li><a href="#s2"><span class="n">2</span> Coût total de possession</a></li>
@@ -176,7 +208,325 @@ footer{text-align:center;padding-bottom:40px;font-size:.72rem;color:var(--g400);
   </nav>
 </header>
 
-<div class="app">
+<!-- ══════════ LANDING ══════════ -->
+<div class="landing" id="landing">
+  <div class="landing-intro">
+    <h2>Quel est votre projet ?</h2>
+    <p>Choisissez le module adapté à votre situation. Chaque module est indépendant et calcule des projections détaillées pour vous aider à prendre la bonne décision.</p>
+  </div>
+  <div class="mod-grid">
+    <div class="mod-card" data-route="A">
+      <span class="mod-badge live">Disponible</span>
+      <div class="mod-ico">🔑</div>
+      <div class="mod-title">Acheter ou louer ?</div>
+      <div class="mod-desc">Vous hésitez à acheter votre résidence principale plutôt que continuer à louer. Comparez le coût réel de l'achat vs la location, sur 25 ans, avec projection patrimoniale.</div>
+      <div class="mod-cta">Lancer le simulateur →</div>
+    </div>
+    <div class="mod-card" data-route="B">
+      <span class="mod-badge live">Disponible</span>
+      <div class="mod-ico">📈</div>
+      <div class="mod-title">Ai-je bien fait d'acheter ?</div>
+      <div class="mod-desc">Vous êtes déjà propriétaire et voulez analyser a posteriori à partir de quand votre achat est devenu plus rentable que la location. Inclut refinancement, inflation des loyers et placement alternatif.</div>
+      <div class="mod-cta">Lancer l'analyse →</div>
+    </div>
+    <div class="mod-card disabled" data-route="C">
+      <span class="mod-badge soon">Bientôt</span>
+      <div class="mod-ico">💼</div>
+      <div class="mod-title">Capacité d'emprunt & projets</div>
+      <div class="mod-desc">Multi-propriétaire : visualisez vos prêts en cours, votre taux d'effort, et projetez quand vous dégagerez la capacité d'emprunt nécessaire pour un nouveau projet.</div>
+      <div class="mod-cta">En construction</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ BACK BAR (visible sur les modules) ══════════ -->
+<div class="back-bar" id="back-bar" style="display:none">
+  <a href="#" class="back-link" id="back-link">← Retour aux modules</a>
+</div>
+
+<!-- ══════════ MODULE B ══════════ -->
+<div class="app" id="module-b" style="display:none">
+
+<section class="sec" id="b-s1">
+  <div class="sec-hdr">
+    <div class="sec-num">1</div>
+    <div>
+      <h2>L'achat (passé)</h2>
+      <p>Renseignez les paramètres de votre acquisition initiale.</p>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-t"><span class="ico">🏘️</span> Le bien et le financement initial</div>
+    <div class="card-b">
+      <div class="grid2" style="margin-bottom:10px">
+        <div class="field">
+          <label>Date d'acquisition</label>
+          <div class="iw"><input type="month" id="b-dateAchat"><span class="u"></span></div>
+        </div>
+        <div class="field">
+          <label>Date d'analyse <span class="hint">par défaut : aujourd'hui</span></label>
+          <div class="iw"><input type="month" id="b-dateAnalyse"><span class="u"></span></div>
+        </div>
+      </div>
+      <div class="grid2" style="margin-bottom:10px">
+        <div class="field">
+          <label>Prix d'achat (FAI)</label>
+          <div class="iw"><input type="number" id="b-prixBien" placeholder="500 000" min="0" step="1000"><span class="u">€</span></div>
+        </div>
+        <div class="field">
+          <label>Frais de notaire payés</label>
+          <div class="iw"><input type="number" id="b-fdn" placeholder="40 000" min="0" step="100"><span class="u">€</span></div>
+        </div>
+      </div>
+      <div class="grid2" style="margin-bottom:10px">
+        <div class="field">
+          <label>Travaux initiaux <span class="hint">à l'achat</span></label>
+          <div class="iw"><input type="number" id="b-travaux" placeholder="0" min="0" step="1000"><span class="u">€</span></div>
+        </div>
+        <div class="field">
+          <label>Garantie crédit payée</label>
+          <div class="iw"><input type="number" id="b-garantie" placeholder="0" min="0" step="100"><span class="u">€</span></div>
+        </div>
+      </div>
+      <div class="field">
+        <label>Apport personnel total <span class="hint">cash mis sur la table à l'achat</span></label>
+        <div class="iw"><input type="number" id="b-apport" placeholder="80 000" min="0" step="1000"><span class="u">€</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="b-s2">
+  <div class="sec-hdr">
+    <div class="sec-num">2</div>
+    <div>
+      <h2>Le prêt initial</h2>
+      <p>Conditions du prêt obtenu à l'acquisition.</p>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-t"><span class="ico">🏦</span> Conditions du prêt</div>
+    <div class="card-b">
+      <div class="grid2" style="margin-bottom:10px">
+        <div class="field">
+          <label>Taux d'emprunt initial</label>
+          <div class="iw"><input type="number" id="b-taux" placeholder="1.5" min="0" max="15" step="0.05"><span class="u">%</span></div>
+        </div>
+        <div class="field">
+          <label>Durée initiale</label>
+          <div class="iw"><input type="number" id="b-duree" placeholder="25" min="1" max="30" step="1"><span class="u">ans</span></div>
+        </div>
+      </div>
+      <div class="sub" style="margin-bottom:6px">Assurance emprunteur</div>
+      <div class="tog-row" style="margin-bottom:8px">
+        <div class="tog-lbl">2 emprunteurs ?<small>Quotités et taux peuvent différer</small></div>
+        <label class="sw"><input type="checkbox" id="b-twoBorrowers"><span class="sl"></span></label>
+      </div>
+      <div class="grid2" style="margin-bottom:10px">
+        <div class="field">
+          <label>Quotité emprunteur 1</label>
+          <div class="iw"><input type="number" id="b-quot1" placeholder="100" min="0" max="100" step="1"><span class="u">%</span></div>
+        </div>
+        <div class="field">
+          <label>Taux assurance 1</label>
+          <div class="iw"><input type="number" id="b-txAss" placeholder="0.30" min="0" max="2" step="0.01"><span class="u">%/an</span></div>
+        </div>
+      </div>
+      <div id="b-borrower2-block" class="grid2 hidden" style="margin-bottom:10px">
+        <div class="field">
+          <label>Quotité emprunteur 2</label>
+          <div class="iw"><input type="number" id="b-quot2" placeholder="100" min="0" max="100" step="1"><span class="u">%</span></div>
+        </div>
+        <div class="field">
+          <label>Taux assurance 2</label>
+          <div class="iw"><input type="number" id="b-txAss2" placeholder="0.30" min="0" max="2" step="0.01"><span class="u">%/an</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="b-s3">
+  <div class="sec-hdr">
+    <div class="sec-num">3</div>
+    <div>
+      <h2>Refinancement</h2>
+      <p>Si vous avez renégocié votre prêt depuis l'acquisition.</p>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-t"><span class="ico">♻️</span> Renégociation / rachat</div>
+    <div class="card-b">
+      <div class="tog-row" style="margin-bottom:10px">
+        <div class="tog-lbl">J'ai refinancé ?<small>Active la saisie des nouvelles conditions</small></div>
+        <label class="sw"><input type="checkbox" id="b-refiToggle"><span class="sl"></span></label>
+      </div>
+      <div id="b-refi-block" class="hidden">
+        <div class="grid2" style="margin-bottom:10px">
+          <div class="field">
+            <label>Date du refinancement</label>
+            <div class="iw"><input type="month" id="b-refiDate"><span class="u"></span></div>
+          </div>
+          <div class="field">
+            <label>Nouveau taux</label>
+            <div class="iw"><input type="number" id="b-refiTaux" placeholder="3.5" min="0" max="15" step="0.05"><span class="u">%</span></div>
+          </div>
+        </div>
+        <div class="grid2" style="margin-bottom:10px">
+          <div class="field">
+            <label>Nouvelle durée restante</label>
+            <div class="iw"><input type="number" id="b-refiDuree" placeholder="20" min="1" max="30" step="1"><span class="u">ans</span></div>
+          </div>
+          <div class="field">
+            <label>IRA + frais nouveau prêt</label>
+            <div class="iw"><input type="number" id="b-refiFrais" placeholder="3 000" min="0" step="100"><span class="u">€</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="b-s4">
+  <div class="sec-hdr">
+    <div class="sec-num">4</div>
+    <div>
+      <h2>Loyer alternatif & charges</h2>
+      <p>Ce que vous auriez payé en restant locataire, et l'évolution de vos charges propriétaire.</p>
+    </div>
+  </div>
+  <div class="s2-layout">
+    <div class="card">
+      <div class="card-t"><span class="ico">🔑</span> Si vous étiez resté locataire</div>
+      <div class="card-b">
+        <div class="field" style="margin-bottom:10px">
+          <label>Loyer mensuel CC à l'achat <span class="hint">tout compris, EDF inclus</span></label>
+          <div class="iw"><input type="number" id="b-loyerAlt" placeholder="1 500" min="0" step="50"><span class="u">€/mois</span></div>
+        </div>
+        <div class="field">
+          <label>Inflation annuelle des loyers <span class="hint">IRL réel récent ~2 %/an</span></label>
+          <div class="iw"><input type="number" id="b-inflLoyer" placeholder="2.0" min="-5" max="15" step="0.1"><span class="u">%/an</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-t"><span class="ico">📋</span> Charges propriétaire à l'achat</div>
+      <div class="card-b">
+        <div class="field" style="margin-bottom:10px">
+          <label>Charges annuelles totales <span class="hint">TF + copro NR + énergie + entretien</span></label>
+          <div class="iw"><input type="number" id="b-charges" placeholder="6 000" min="0" step="100"><span class="u">€/an</span></div>
+        </div>
+        <div class="field">
+          <label>Inflation annuelle des charges</label>
+          <div class="iw"><input type="number" id="b-inflCharges" placeholder="2.0" min="-5" max="15" step="0.1"><span class="u">%/an</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="b-s5">
+  <div class="sec-hdr">
+    <div class="sec-num">5</div>
+    <div>
+      <h2>Aujourd'hui</h2>
+      <p>Estimation de la valeur actuelle et mode de comparaison.</p>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-t"><span class="ico">📊</span> Situation actuelle & paramètres de comparaison</div>
+    <div class="card-b">
+      <div class="field" style="margin-bottom:10px">
+        <label>Valeur actuelle estimée du bien</label>
+        <div class="iw"><input type="number" id="b-valeurAuj" placeholder="600 000" min="0" step="1000"><span class="u">€</span></div>
+      </div>
+      <div class="sep"></div>
+      <div class="sub" style="margin-bottom:6px">Mode de comparaison</div>
+      <div class="field" style="margin-bottom:10px">
+        <div class="rbg">
+          <input type="radio" name="b-mode" id="b-mode-flux" value="flux"><label for="b-mode-flux">Flux seuls</label>
+          <input type="radio" name="b-mode" id="b-mode-placement" value="placement" checked><label for="b-mode-placement">Avec placement de l'apport + différentiel</label>
+        </div>
+      </div>
+      <div class="info neutral" style="margin-bottom:10px;font-size:.78rem" id="b-mode-info">
+        Mode placement : on suppose que si vous étiez resté locataire, vous auriez placé votre apport + chaque mois la différence entre TCO propriétaire et loyer locataire.
+      </div>
+      <div class="field" id="b-rendAltField">
+        <label>Rendement placement alternatif <span class="hint">livret A ~3 %, ETF ~5-7 %</span></label>
+        <div class="iw"><input type="number" id="b-rendAlt" placeholder="3.0" min="0" max="20" step="0.5"><span class="u">%/an</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="b-s6">
+  <div class="sec-hdr">
+    <div class="sec-num">6</div>
+    <div>
+      <h2>Résultats</h2>
+      <p>Évolution année par année et point de break-even.</p>
+    </div>
+  </div>
+
+  <div class="kpi-row k3" style="margin-bottom:18px">
+    <div class="kpi" id="b-kpi-be-box"><div class="kl">Break-even patrimonial</div><div class="kv" id="b-kpi-be">—</div><div class="ks" id="b-kpi-be-s">—</div></div>
+    <div class="kpi" id="b-kpi-av-box"><div class="kl">Avantage net aujourd'hui</div><div class="kv" id="b-kpi-av">—</div><div class="ks" id="b-kpi-av-s">si revente immédiate</div></div>
+    <div class="kpi kblue"><div class="kl">Equity actuelle</div><div class="kv" id="b-kpi-eq">—</div><div class="ks" id="b-kpi-eq-s">valeur bien − capital restant</div></div>
+  </div>
+
+  <div class="card">
+    <div class="card-t"><span class="ico">📈</span> Évolution année par année</div>
+    <div class="card-b" style="padding:0">
+      <div style="overflow-x:auto">
+        <table class="proj-tbl">
+          <thead>
+            <tr>
+              <th>Année</th>
+              <th>TCO/mois</th>
+              <th>Loyer alt./mois</th>
+              <th>Cumul proprio</th>
+              <th>Cumul locataire</th>
+              <th>Valeur bien</th>
+              <th>Capital restant</th>
+              <th>Equity</th>
+              <th>Avantage net</th>
+            </tr>
+          </thead>
+          <tbody id="b-proj-body">
+            <tr><td colspan="9" style="text-align:center;padding:24px;color:var(--g400);font-size:.8rem">Renseignez les paramètres pour voir l'évolution.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:14px">
+    <div class="card-t"><span class="ico">📊</span> Cumul propriétaire vs locataire</div>
+    <div class="card-b">
+      <div class="chart-wrap"><canvas id="b-chart" height="280"></canvas></div>
+    </div>
+  </div>
+</section>
+
+</div><!-- /module-b -->
+
+<!-- ══════════ MODULE C (stub) ══════════ -->
+<div class="stub" id="module-c" style="display:none">
+  <div class="stub-tag">En construction</div>
+  <div class="stub-ico">💼</div>
+  <h2>Capacité d'emprunt & projets</h2>
+  <p>Pour les multi-propriétaires : tableau de concomitance des prêts en cours, taux d'effort, reste à vivre, et projection de la capacité d'emprunt future. Sera inclus :</p>
+  <ul>
+    <li>🏠 Saisie du patrimoine actuel (RP + locatifs)</li>
+    <li>📋 Tableau des prêts en cours avec dates de fin</li>
+    <li>📐 Taux d'endettement, taux d'effort, reste à vivre</li>
+    <li>⏱️ Projection : quand puis-je faire un nouveau projet ?</li>
+    <li>💡 Simulation de capacité d'emprunt selon revenus + patrimoine</li>
+  </ul>
+</div>
+
+<!-- ══════════ MODULE A ══════════ -->
+<div class="app" id="module-a" style="display:none">
 
 <!-- ══════════ SECTION 1 ══════════ -->
 <section class="sec" id="s1">
@@ -209,13 +559,17 @@ footer{text-align:center;padding-bottom:40px;font-size:.72rem;color:var(--g400);
           </div>
           <div class="grid2" style="margin-bottom:10px">
             <div class="field">
-              <label>Frais de notaire <span class="hint">auto ≈ 8 %</span></label>
+              <label>Frais de notaire <span class="hint">auto ≈ 8 % hors mobilier</span></label>
               <div class="iw"><input type="number" id="fraisNotaire" class="auto" placeholder="0" min="0" step="100"><span class="u">€</span></div>
             </div>
             <div class="field">
               <label>Frais de dossier</label>
               <div class="iw"><input type="number" id="fraisDossier" placeholder="850" min="0" step="50"><span class="u">€</span></div>
             </div>
+          </div>
+          <div class="field" style="margin-bottom:10px">
+            <label>Mobilier inclus dans la vente <span class="hint">non taxé : canapé, électro, cuisine équipée…</span></label>
+            <div class="iw"><input type="number" id="mobilier" placeholder="0" min="0" step="500"><span class="u">€</span></div>
           </div>
           <div class="grid2" style="margin-bottom:10px">
             <div class="field">
@@ -228,7 +582,7 @@ footer{text-align:center;padding-bottom:40px;font-size:.72rem;color:var(--g400);
             </div>
           </div>
           <div class="field">
-            <label>Apport personnel</label>
+            <label>Apport personnel <span class="hint">cash total mis sur la table (peut inclure travaux/garantie payés cash)</span></label>
             <div class="iw"><input type="number" id="apport" placeholder="80 000" min="0" step="1000"><span class="u">€</span></div>
           </div>
         </div>
@@ -248,10 +602,64 @@ footer{text-align:center;padding-bottom:40px;font-size:.72rem;color:var(--g400);
               <div class="iw"><input type="number" id="duree" placeholder="25" min="1" max="30" step="1"><span class="u">ans</span></div>
             </div>
           </div>
-          <div class="field">
-            <label>Taux assurance emprunteur <span class="hint">sur capital initial</span></label>
-            <div class="iw"><input type="number" id="txAss" placeholder="0.30" min="0" max="2" step="0.01"><span class="u">%/an</span></div>
+          <div class="sub" style="margin-bottom:6px">Assurance emprunteur</div>
+          <div class="tog-row" style="margin-bottom:8px">
+            <div class="tog-lbl">2 emprunteurs ?<small>Quotités et taux d'assurance peuvent différer</small></div>
+            <label class="sw"><input type="checkbox" id="twoBorrowers"><span class="sl"></span></label>
           </div>
+
+          <div id="borrower1-block">
+            <div class="grid3" style="margin-bottom:10px">
+              <div class="field">
+                <label>Âge emprunteur 1 <span class="hint">optionnel</span></label>
+                <div class="iw"><input type="number" id="age1" placeholder="35" min="18" max="80" step="1"><span class="u">ans</span></div>
+              </div>
+              <div class="field">
+                <label>Quotité emprunteur 1</label>
+                <div class="iw"><input type="number" id="quot1" placeholder="100" min="0" max="100" step="1"><span class="u">%</span></div>
+              </div>
+              <div class="field">
+                <label>Taux assurance 1 <span class="hint">sur capital initial</span></label>
+                <div class="iw"><input type="number" id="txAss" placeholder="0.30" min="0" max="2" step="0.01"><span class="u">%/an</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div id="borrower2-block" class="hidden">
+            <div class="grid3" style="margin-bottom:10px">
+              <div class="field">
+                <label>Âge emprunteur 2 <span class="hint">optionnel</span></label>
+                <div class="iw"><input type="number" id="age2" placeholder="33" min="18" max="80" step="1"><span class="u">ans</span></div>
+              </div>
+              <div class="field">
+                <label>Quotité emprunteur 2</label>
+                <div class="iw"><input type="number" id="quot2" placeholder="100" min="0" max="100" step="1"><span class="u">%</span></div>
+              </div>
+              <div class="field">
+                <label>Taux assurance 2</label>
+                <div class="iw"><input type="number" id="txAss2" placeholder="0.30" min="0" max="2" step="0.01"><span class="u">%/an</span></div>
+              </div>
+            </div>
+            <div class="info neutral" style="margin-bottom:10px;font-size:.74rem">💡 Quotité totale typique : 200 % (chaque emprunteur couvert à 100 %). Si 100 % au total : un seul est assuré, l'autre 0 %.</div>
+          </div>
+          <div class="sep"></div>
+
+          <div class="sub" style="margin-bottom:6px">Récupération garantie crédit logement</div>
+          <div class="tog-row" style="margin-bottom:8px">
+            <div class="tog-lbl">Garantie récupérable en fin de prêt ?<small>Cas du Crédit Logement (FGAS) — pas de l'hypothèque</small></div>
+            <label class="sw"><input type="checkbox" id="recupGarantie" checked><span class="sl"></span></label>
+          </div>
+          <div id="recupGarantie-block" class="grid2" style="margin-bottom:10px">
+            <div class="field">
+              <label>Taux de récupération <span class="hint">~73 % chez Crédit Logement</span></label>
+              <div class="iw"><input type="number" id="tauxRecupGar" placeholder="73" min="0" max="100" step="1"><span class="u">%</span></div>
+            </div>
+            <div class="field">
+              <label>Frais de mainlevée</label>
+              <div class="iw"><input type="number" id="fraisMainlevee" placeholder="600" min="0" step="50"><span class="u">€</span></div>
+            </div>
+          </div>
+
           <div class="sep"></div>
           <table class="ctbl">
             <tr><td>Montant emprunté</td><td id="r-emprunt">—</td></tr>
@@ -259,6 +667,7 @@ footer{text-align:center;padding-bottom:40px;font-size:.72rem;color:var(--g400);
             <tr><td>Assurance mensuelle</td><td id="r-ass">—</td></tr>
             <tr class="ttl hl"><td>Mensualité totale crédit</td><td id="r-menstot">—</td></tr>
             <tr class="muted"><td>Coût total intérêts</td><td id="r-ints">—</td></tr>
+            <tr class="muted" id="r-recup-row"><td>Récup. garantie en fin de prêt</td><td id="r-recup">—</td></tr>
           </table>
         </div>
       </div>
@@ -365,10 +774,20 @@ footer{text-align:center;padding-bottom:40px;font-size:.72rem;color:var(--g400);
             <div class="iw"><input type="number" id="edf" placeholder="1 200" min="0" step="50"><span class="u">€/an</span></div>
           </div>
           <div class="field" id="gazField">
-            <label>Gaz / Fioul</label>
+            <label>Gaz / Fioul <span class="hint" id="gazHint">chauffage + ECS si gaz</span></label>
             <div class="iw"><input type="number" id="gaz" placeholder="800" min="0" step="50"><span class="u">€/an</span></div>
           </div>
 
+        </div>
+      </div>
+
+      <!-- Toggle d'activation du bloc risque -->
+      <div class="card" id="card-risque-toggle">
+        <div class="card-b" style="padding:12px 18px">
+          <div class="tog-row" id="tog-risque-row" style="margin:0">
+            <div class="tog-lbl">Analyser risque gros travaux copro ?<small>Bloc avancé : ravalement, toiture, ITE, ascenseur…</small></div>
+            <label class="sw"><input type="checkbox" id="showRisque"><span class="sl"></span></label>
+          </div>
         </div>
       </div>
 
@@ -591,6 +1010,10 @@ footer{text-align:center;padding-bottom:40px;font-size:.72rem;color:var(--g400);
           <div class="iw"><input type="number" id="appreciation" placeholder="1.5" min="-5" max="20" step="0.5"><span class="u">%/an</span></div>
         </div>
         <div class="field">
+          <label>Inflation des loyers <span class="hint">IRL réel ~2 %/an récent</span></label>
+          <div class="iw"><input type="number" id="inflLoyer" placeholder="2.0" min="-5" max="15" step="0.1"><span class="u">%/an</span></div>
+        </div>
+        <div class="field">
           <label>Entretien courant estimé</label>
           <div class="iw"><input type="number" id="travauxAn" placeholder="1 500" min="0" step="100"><span class="u">€/an</span></div>
         </div>
@@ -808,15 +1231,28 @@ function recalc() {
   const duree      = get('duree');
   const txAss      = get('txAss');
   const mensCredit = calcMensualite(emprunt, taux, duree);
-  const assMens    = emprunt * txAss / 100 / 12;
+  // Assurance : (quotité 1 × taux 1) + (quotité 2 × taux 2 si 2 emprunteurs)
+  const isTwoBorrowers = $('twoBorrowers').checked;
+  const quot1  = (parseFloat($('quot1').value) || 100) / 100;
+  const quot2  = isTwoBorrowers ? (parseFloat($('quot2').value) || 0) / 100 : 0;
+  const txAss2 = isTwoBorrowers ? (parseFloat($('txAss2').value) || 0) : 0;
+  const assMens = (emprunt * quot1 * txAss / 100 + emprunt * quot2 * txAss2 / 100) / 12;
   const mensTot    = mensCredit + assMens;
   const coutInts   = mensCredit * duree * 12 - emprunt;
+
+  // Récupération garantie crédit logement en fin de prêt
+  const recupGarantieEnabled = $('recupGarantie').checked;
+  const tauxRecupGar = recupGarantieEnabled ? (parseFloat($('tauxRecupGar').value) || 0) / 100 : 0;
+  const fraisMainlevee = recupGarantieEnabled ? (parseFloat($('fraisMainlevee').value) || 0) : 0;
+  const recupGarantie = recupGarantieEnabled ? Math.max(0, garantie * tauxRecupGar - fraisMainlevee) : 0;
 
   set('r-emprunt', fmt(emprunt));
   set('r-mens',    fmt(mensCredit, 2));
   set('r-ass',     fmt(assMens, 2));
   set('r-menstot', fmt(mensTot, 2));
   set('r-ints',    fmt(coutInts));
+  $('r-recup-row').classList.toggle('hidden', !recupGarantieEnabled || recupGarantie === 0);
+  set('r-recup',   '+ ' + fmt(recupGarantie));
 
   // 3. Charges
   const isCopro   = $('isCopro').checked;
@@ -831,7 +1267,9 @@ function recalc() {
   const assHab    = get('assHab');
   const edf       = get('edf');
   const chauffColl = $('chauffColl').checked;
-  const gaz       = chauffColl ? 0 : get('gaz');
+  const ecsColl    = $('ecsColl').checked;
+  // Pas de gaz seulement si chauffage ET ECS sont collectifs (sinon possible chauf gaz indiv ou ECS gaz indiv)
+  const gaz       = (chauffColl && ecsColl) ? 0 : get('gaz');
 
   // TCO owner-occupant : paie TOUT (TF totale, charges NR + R pour soi)
   const chargesAnnProprio = chargesNR + tfTotale + assHab + edf + gaz;
@@ -864,7 +1302,7 @@ function recalc() {
   set('t-asshab',    fmt(assHab / 12, 0));
   set('t-edf',       fmt(edf / 12, 0));
   set('t-gaz',       fmt(gaz / 12, 0));
-  $('t-gaz-row').classList.toggle('hidden', chauffColl);
+  $('t-gaz-row').classList.toggle('hidden', chauffColl && ecsColl);
   set('t-tco', fmt(tco, 0));
 
   set('c-tco',       fmt(tco, 0));
@@ -952,6 +1390,7 @@ function recalc() {
   // Section 4 — Projection
   const anneesRp     = Math.min(get('anneesRp') || duree, duree || 25);
   const apprecPct    = get('appreciation') / 100;
+  const inflLoyerPct = get('inflLoyer') / 100;
   const travauxAnVal = get('travauxAn');
   const fraisVentePct = get('fraisVente') / 100;
   const rendAlt      = get('rendAlt') / 100;
@@ -966,11 +1405,11 @@ function recalc() {
 
   const amort = buildAmort(emprunt, taux, duree || 25);
 
-  // delta = TCO - coût location (positif = acheter coûte plus)
-  const suroMens = delta;
-
   const projRows = [];
   let cumulInts = 0, cumulCharges = 0;
+  // Placement alternatif itératif (pour gérer l'inflation du loyer)
+  let placementAlt = apport;
+  const rM = rendAlt / 12;
 
   for (let yr = 1; yr <= (duree || 25); yr++) {
     const a = amort[yr - 1] || { intYr: 0, capYr: 0, restant: 0 };
@@ -979,17 +1418,20 @@ function recalc() {
     cumulCharges += tcoCharges + travauxAnVal + txEx;
 
     const valeurBien = (prixBien + prixParking) * Math.pow(1 + apprecPct, yr);
-    const equity     = valeurBien - a.restant;
-    const netVente   = valeurBien * (1 - fraisVentePct) - a.restant;
+    // Bonus récupération garantie crédit en fin de prêt (seulement à la dernière année du prêt)
+    const recupBonus = (yr === (duree || 25)) ? recupGarantie : 0;
+    const equity     = valeurBien - a.restant + recupBonus;
+    const netVente   = valeurBien * (1 - fraisVentePct) - a.restant + recupBonus;
 
-    // Placement alternatif
-    const apportAlt = apport * Math.pow(1 + rendAlt, yr);
-    let surAlt = 0;
-    if (suroMens > 0 && rendAlt > 0) {
-      const rM = rendAlt / 12, n = yr * 12;
-      surAlt = suroMens * (Math.pow(1 + rM, n) - 1) / rM;
+    // Loyer alternatif indexé sur l'inflation (année 1 = saisi, puis croissance)
+    const loyerAltYr = loyerAlt * Math.pow(1 + inflLoyerPct, yr - 1);
+    const suroMensYr = tco - loyerAltYr;
+
+    // 12 mois : capital existant capitalisé + contribution mensuelle (si achat plus cher)
+    for (let mo = 0; mo < 12; mo++) {
+      placementAlt = placementAlt * (1 + rM);
+      if (suroMensYr > 0) placementAlt += suroMensYr;
     }
-    const placementAlt = apportAlt + surAlt;
     const avantage = netVente - placementAlt;
     const hasTxEx = txEx > 0;
 
@@ -1150,24 +1592,58 @@ function updateGarantie() {
   }
 }
 
-$('prixBien').addEventListener('input', () => {
-  const v = parseFloat($('prixBien').value) || 0;
-  if (v > 0 && !$('fraisNotaire')._touched) {
-    $('fraisNotaire').value = Math.round(v * 0.08);
+function updateFraisNotaire() {
+  const base = Math.max(0,
+    (parseFloat($('prixBien').value) || 0)
+    + (parseFloat($('prixParking').value) || 0)
+    - (parseFloat($('mobilier').value) || 0)
+  );
+  if (base > 0 && !$('fraisNotaire')._touched) {
+    $('fraisNotaire').value = Math.round(base * 0.08);
+    $('fraisNotaire').classList.add('auto');
   }
+}
+$('prixBien').addEventListener('input', () => {
+  updateFraisNotaire();
   updateGarantie();
   recalc();
 });
-['prixParking','fraisDossier','travaux','apport'].forEach(id => {
+$('prixParking').addEventListener('input', () => {
+  updateFraisNotaire();
+  updateGarantie();
+  recalc();
+});
+$('mobilier').addEventListener('input', () => {
+  updateFraisNotaire();
+  recalc();
+});
+['fraisDossier','travaux','apport'].forEach(id => {
   $(id)?.addEventListener('input', () => { updateGarantie(); recalc(); });
 });
 
 $('fraisNotaire').addEventListener('input', () => { $('fraisNotaire')._touched = true; updateGarantie(); recalc(); });
 $('garantie').addEventListener('input', () => { $('garantie')._touched = true; $('garantie').classList.remove('auto'); recalc(); });
 
+function updateRisqueCardVisibility() {
+  const show = $('isCopro').checked && $('showRisque').checked;
+  $('card-risque').classList.toggle('hidden', !show);
+}
 $('isCopro').addEventListener('change', () => {
   $('copro-section').classList.toggle('hidden', !$('isCopro').checked);
-  $('card-risque').classList.toggle('hidden', !$('isCopro').checked);
+  $('card-risque-toggle').classList.toggle('hidden', !$('isCopro').checked);
+  updateRisqueCardVisibility();
+  recalc();
+});
+$('showRisque').addEventListener('change', () => {
+  updateRisqueCardVisibility();
+  recalc();
+});
+$('twoBorrowers').addEventListener('change', () => {
+  $('borrower2-block').classList.toggle('hidden', !$('twoBorrowers').checked);
+  recalc();
+});
+$('recupGarantie').addEventListener('change', () => {
+  $('recupGarantie-block').classList.toggle('hidden', !$('recupGarantie').checked);
   recalc();
 });
 
@@ -1179,11 +1655,25 @@ document.querySelectorAll('[name=cpPeriode]').forEach(r => r.addEventListener('c
   recalc();
 }));
 
-$('chauffColl').addEventListener('change', () => {
-  $('gazField').classList.toggle('hidden', $('chauffColl').checked);
-  $('edfHint').textContent = $('chauffColl').checked ? 'hors chauffage (collectif)' : 'dont chauffage';
-  recalc();
-});
+function updateEnergyFields() {
+  const cc = $('chauffColl').checked;
+  const ec = $('ecsColl').checked;
+  // Champ gaz masqué uniquement si TOUT est collectif (sinon peut servir pour chauf gaz indiv ou ECS gaz indiv)
+  $('gazField').classList.toggle('hidden', cc && ec);
+  let hint;
+  if (cc && ec)       hint = 'hors chauffage et ECS (tous deux collectifs)';
+  else if (cc && !ec) hint = 'hors chauffage collectif, ECS comprise si élec';
+  else if (!cc && ec) hint = 'dont chauffage si élec, hors ECS collective';
+  else                hint = 'dont chauffage et ECS si élec';
+  $('edfHint').textContent = hint;
+  // Hint sur le champ gaz pour clarifier l'usage
+  const gazHintEl = $('gazHint');
+  if (gazHintEl) {
+    if (cc && !ec)      gazHintEl.textContent = 'ECS gaz uniquement';
+    else if (!cc && ec) gazHintEl.textContent = 'chauffage gaz uniquement';
+    else                gazHintEl.textContent = 'chauffage + ECS si gaz';
+  }
+}
 
 document.querySelectorAll('[name=loyerLocType]').forEach(r => r.addEventListener('change', () => {
   const isHC = document.querySelector('[name=loyerLocType]:checked').value === 'hc';
@@ -1195,15 +1685,15 @@ document.querySelectorAll('[name=loyerLocType]').forEach(r => r.addEventListener
 }));
 
 // ─── Wire all inputs ─────────────────────────────────────────────────────────
-const allInputs = ['taux','duree','txAss','chargesTotal','chargesRecup',
+const allInputs = ['taux','duree','txAss','txAss2','quot1','quot2','age1','age2','mobilier','tauxRecupGar','fraisMainlevee','chargesTotal','chargesRecup',
   'chargesTriTot','chargesTriRecup','tf','teom','assHab','edf','gaz',
   'loyerAlt','loyerLoc','loyerLocCharges','vacance','pno',
   'fraisGestion','loyerNouvRP','assHabLoc',
-  'anneesRp','appreciation','travauxAn','fraisVente','rendAlt','anneeSimu',
+  'anneesRp','appreciation','inflLoyer','travauxAn','fraisVente','rendAlt','anneeSimu',
   'tx1-yr','tx1-amt','tx1-desc','tx2-yr','tx2-amt','tx2-desc','tx3-yr','tx3-amt','tx3-desc'];
 allInputs.forEach(id => { const el = $(id); if (el) el.addEventListener('input', recalc); });
-$('ecsColl').addEventListener('change', recalc);
-$('chauffColl').addEventListener('change', recalc);
+$('ecsColl').addEventListener('change', () => { updateEnergyFields(); recalc(); });
+$('chauffColl').addEventListener('change', () => { updateEnergyFields(); recalc(); });
 
 // Scroll spy
 const observer = new IntersectionObserver(entries => {
@@ -1219,20 +1709,371 @@ const observer = new IntersectionObserver(entries => {
 
 window.addEventListener('resize', () => { if (lastProjData) drawChart(lastProjData, get('anneeSimu')); });
 
+// ─── Routing ────────────────────────────────────────────────────────────────
+const ROUTES = {
+  landing: { title: 'EvalImmo', subtitle: "Outils d'évaluation immobilière pour particuliers." },
+  A:       { title: 'EvalImmo · Acheter ou louer ?', subtitle: 'Comparez le coût réel de l\'achat vs la location, sur 25 ans.' },
+  B:       { title: 'EvalImmo · Étude rétroactive', subtitle: 'À partir de quand votre achat est-il devenu rentable ?' },
+  C:       { title: 'EvalImmo · Capacité de projet', subtitle: 'Pilotez vos prêts en cours et votre capacité d\'emprunt.' },
+};
+function navigate(route) {
+  // Hide all
+  $('landing').style.display = 'none';
+  $('module-a').style.display = 'none';
+  $('module-b').style.display = 'none';
+  $('module-c').style.display = 'none';
+  $('hdr-nav-a').style.display = 'none';
+  $('back-bar').style.display = 'none';
+  // Show target
+  if (route === 'landing') {
+    $('landing').style.display = 'block';
+  } else if (route === 'A') {
+    $('module-a').style.display = 'block';
+    $('hdr-nav-a').style.display = 'block';
+    $('back-bar').style.display = 'flex';
+    // Le canvas a clientWidth=0 quand caché : on relance recalc() pour redessiner proprement
+    if (typeof recalc === 'function') setTimeout(recalc, 0);
+  } else if (route === 'B') {
+    $('module-b').style.display = 'block';
+    $('back-bar').style.display = 'flex';
+    if (typeof bRecalc === 'function') setTimeout(bRecalc, 0);
+  } else if (route === 'C') {
+    $('module-c').style.display = 'block';
+    $('back-bar').style.display = 'flex';
+  }
+  // Update header
+  const meta = ROUTES[route] || ROUTES.landing;
+  $('hdr-title').textContent = meta.title;
+  $('hdr-subtitle').textContent = meta.subtitle;
+  // Hash & scroll
+  history.replaceState(null, '', route === 'landing' ? '#' : '#mod-' + route);
+  window.scrollTo({ top: 0, behavior: 'instant' in window ? 'instant' : 'auto' });
+}
+document.querySelectorAll('.mod-card').forEach(card => {
+  card.addEventListener('click', () => navigate(card.getAttribute('data-route')));
+});
+$('back-link').addEventListener('click', e => { e.preventDefault(); navigate('landing'); });
+
+// ─── MODULE B : Étude rétroactive ──────────────────────────────────────────
+function bGet(id) { return parseFloat($(id)?.value) || 0; }
+function bGetMonth(id) {
+  const v = $(id)?.value;  // format "YYYY-MM"
+  if (!v) return null;
+  const [y, m] = v.split('-').map(Number);
+  return { y, m };
+}
+function bMonthsBetween(d1, d2) {
+  if (!d1 || !d2) return 0;
+  return (d2.y - d1.y) * 12 + (d2.m - d1.m);
+}
+
+let bLastProjData = null;
+
+function bRecalc() {
+  const dAchat = bGetMonth('b-dateAchat');
+  const dAnalyse = bGetMonth('b-dateAnalyse');
+  if (!dAchat || !dAnalyse) {
+    $('b-proj-body').innerHTML = '<tr><td colspan="9" style="text-align:center;padding:24px;color:var(--g400);font-size:.8rem">Renseignez la date d\'acquisition pour voir l\'évolution.</td></tr>';
+    return;
+  }
+  const totalMonths = bMonthsBetween(dAchat, dAnalyse);
+  if (totalMonths <= 0) {
+    $('b-proj-body').innerHTML = '<tr><td colspan="9" style="text-align:center;padding:24px;color:var(--orange);font-size:.8rem">La date d\'analyse doit être postérieure à la date d\'acquisition.</td></tr>';
+    return;
+  }
+
+  const prixBien  = bGet('b-prixBien');
+  const fdn       = bGet('b-fdn');
+  const travaux   = bGet('b-travaux');
+  const garantie  = bGet('b-garantie');
+  const apport    = bGet('b-apport');
+  const coutTotal = prixBien + fdn + travaux + garantie;
+  const empruntInitial = Math.max(0, coutTotal - apport);
+
+  const taux  = bGet('b-taux');
+  const duree = bGet('b-duree') || 25;
+  const txAss = bGet('b-txAss');
+  const isTwoB = $('b-twoBorrowers').checked;
+  const q1 = (bGet('b-quot1') || 100) / 100;
+  const q2 = isTwoB ? (bGet('b-quot2') || 0) / 100 : 0;
+  const txAss2 = isTwoB ? bGet('b-txAss2') : 0;
+  const assMois = empruntInitial * (q1 * txAss / 100 + q2 * txAss2 / 100) / 12;
+
+  const refiOn = $('b-refiToggle').checked;
+  const dRefi = refiOn ? bGetMonth('b-refiDate') : null;
+  const refiTaux = refiOn ? bGet('b-refiTaux') : 0;
+  const refiDureeRest = refiOn ? bGet('b-refiDuree') : 0;
+  const refiFrais = refiOn ? bGet('b-refiFrais') : 0;
+  const refiMonth = (refiOn && dRefi) ? bMonthsBetween(dAchat, dRefi) : null;
+
+  const loyerAlt0 = bGet('b-loyerAlt');
+  const inflLoyer = bGet('b-inflLoyer') / 100;
+  const charges0  = bGet('b-charges');
+  const inflCharges = bGet('b-inflCharges') / 100;
+  const valeurAuj = bGet('b-valeurAuj');
+
+  const mode = document.querySelector('[name=b-mode]:checked')?.value || 'placement';
+  const rendAlt = bGet('b-rendAlt') / 100;
+
+  // Appréciation implicite
+  const yearsTotal = totalMonths / 12;
+  const apprecImplied = (prixBien > 0 && valeurAuj > 0 && yearsTotal > 0)
+    ? Math.pow(valeurAuj / prixBien, 1 / yearsTotal) - 1 : 0;
+
+  // Amortissement mois par mois
+  let restant = empruntInitial;
+  let mensCredit = calcMensualite(empruntInitial, taux, duree);
+  let rMois = taux / 100 / 12;
+
+  let cumulProprio = 0;        // somme TCO mensuel propriétaire
+  let cumulLocataire = 0;      // somme loyer locataire mensuel indexé
+  let placement = apport;      // valeur du placement alternatif (mode placement)
+  const rPlacementMois = rendAlt / 12;
+
+  const yearlyData = [];
+
+  for (let m = 1; m <= totalMonths; m++) {
+    // Refinancement
+    if (refiMonth !== null && m === refiMonth + 1) {
+      mensCredit = calcMensualite(restant, refiTaux, refiDureeRest);
+      rMois = refiTaux / 100 / 12;
+    }
+
+    // Amortissement du mois
+    const interetMois = restant * rMois;
+    const capitalMois = Math.min(restant, Math.max(0, mensCredit - interetMois));
+    restant = Math.max(0, restant - capitalMois);
+    if (restant === 0) mensCredit = 0;  // prêt soldé
+
+    const yearsElapsed = (m - 1) / 12;
+    const loyerAltMois = loyerAlt0 * Math.pow(1 + inflLoyer, yearsElapsed);
+    const chargesMoisCe = (charges0 / 12) * Math.pow(1 + inflCharges, yearsElapsed);
+    const fraisRefiMois = (refiMonth !== null && m === refiMonth + 1) ? refiFrais : 0;
+
+    const tcoMois = mensCredit + assMois + chargesMoisCe + fraisRefiMois;
+    cumulProprio += tcoMois;
+    cumulLocataire += loyerAltMois;
+
+    // Placement alternatif
+    placement = placement * (1 + rPlacementMois);
+    const diff = tcoMois - loyerAltMois;
+    if (diff > 0) placement += diff;
+
+    // Aggregation par année
+    if (m % 12 === 0 || m === totalMonths) {
+      const yr = Math.ceil(m / 12);
+      const monthsDansLAnnee = ((m - 1) % 12) + 1;
+      const valeurBien = prixBien * Math.pow(1 + apprecImplied, m / 12);
+      const equity = valeurBien - restant;
+      // Pour cette année, TCO mensuel moyen et loyer alt moyen approchés sur le dernier mois
+      const tcoMensMoy = tcoMois;
+      const loyerAltMoy = loyerAltMois;
+      const avantageFlux = equity - (cumulProprio - cumulLocataire);
+      const avantagePlacement = equity - placement;
+      yearlyData.push({
+        yr, m, valeurBien, restant, equity, tcoMensMoy, loyerAltMoy,
+        cumulProprio, cumulLocataire, placement,
+        avantageFlux, avantagePlacement,
+        partialYear: monthsDansLAnnee < 12,
+      });
+    }
+  }
+  bLastProjData = yearlyData;
+
+  // Tableau
+  const useFlux = mode === 'flux';
+  const tbody = $('b-proj-body');
+  if (!yearlyData.length) {
+    tbody.innerHTML = '<tr><td colspan="9" style="text-align:center;padding:24px;color:var(--g400);font-size:.8rem">Données insuffisantes.</td></tr>';
+  } else {
+    tbody.innerHTML = yearlyData.map(r => {
+      const av = useFlux ? r.avantageFlux : r.avantagePlacement;
+      const cumLoc = useFlux ? r.cumulLocataire : r.placement;
+      const avCls = av > 0 ? 'pos' : 'neg';
+      const lbl = `Année ${r.yr}` + (r.partialYear ? ' (partielle)' : '');
+      return `<tr>
+        <td>${lbl}</td>
+        <td>${fmt(r.tcoMensMoy, 0)}</td>
+        <td>${fmt(r.loyerAltMoy, 0)}</td>
+        <td>${fmt(r.cumulProprio)}</td>
+        <td>${fmt(cumLoc)}</td>
+        <td>${fmt(r.valeurBien)}</td>
+        <td>${fmt(r.restant)}</td>
+        <td>${fmt(r.equity)}</td>
+        <td class="${avCls}">${av > 0 ? '+' : '− '}${fmt(Math.abs(av))}</td>
+      </tr>`;
+    }).join('');
+  }
+
+  // KPIs
+  const last = yearlyData[yearlyData.length - 1];
+  if (last) {
+    const av = useFlux ? last.avantageFlux : last.avantagePlacement;
+    set('b-kpi-eq', fmt(last.equity));
+    set('b-kpi-eq-s', `valeur bien ${fmt(last.valeurBien)} − restant ${fmt(last.restant)}`);
+    set('b-kpi-av', (av >= 0 ? '+' : '− ') + fmt(Math.abs(av)));
+    set('b-kpi-av-s', useFlux ? 'mode flux seuls' : `mode placement (${(rendAlt*100).toFixed(1)} %/an)`);
+    $('b-kpi-av-box').className = 'kpi ' + (av > 0 ? 'kgreen' : 'kred');
+
+    const breakEvenYr = yearlyData.find(r => (useFlux ? r.avantageFlux : r.avantagePlacement) > 0);
+    if (breakEvenYr) {
+      set('b-kpi-be', `Année ${breakEvenYr.yr}`);
+      set('b-kpi-be-s', `dès ${breakEvenYr.yr} ans, l'achat est gagnant`);
+      $('b-kpi-be-box').className = 'kpi kgreen';
+    } else {
+      set('b-kpi-be', 'Pas encore');
+      set('b-kpi-be-s', 'l\'achat n\'est pas encore rentable vs location');
+      $('b-kpi-be-box').className = 'kpi kred';
+    }
+  }
+
+  bDrawChart(yearlyData, useFlux);
+}
+
+function bDrawChart(rows, useFlux) {
+  const canvas = $('b-chart');
+  if (!canvas || !rows || !rows.length) return;
+  const dpr = window.devicePixelRatio || 1;
+  const W = Math.max(300, canvas.parentElement.clientWidth - 36);
+  const H = 280;
+  canvas.width = W * dpr;
+  canvas.height = H * dpr;
+  canvas.style.width = W + 'px';
+  canvas.style.height = H + 'px';
+  const ctx = canvas.getContext('2d');
+  ctx.scale(dpr, dpr);
+  ctx.clearRect(0, 0, W, H);
+
+  const padL = 60, padR = 20, padT = 20, padB = 36;
+  const cw = W - padL - padR, ch = H - padT - padB;
+  const xs = rows.map(r => r.yr);
+  const ysProprio = rows.map(r => r.cumulProprio);
+  const ysLoc = rows.map(r => useFlux ? r.cumulLocataire : r.placement);
+  const ysEquity = rows.map(r => r.equity);
+  const maxY = Math.max(...ysProprio, ...ysLoc, ...ysEquity, 1);
+  const minX = xs[0], maxX = xs[xs.length - 1];
+
+  // Grille horizontale
+  ctx.strokeStyle = '#e2e8f0'; ctx.lineWidth = 1;
+  ctx.font = '10px -apple-system,sans-serif'; ctx.fillStyle = '#94a3b8';
+  for (let i = 0; i <= 4; i++) {
+    const y = padT + ch * i / 4;
+    ctx.beginPath(); ctx.moveTo(padL, y); ctx.lineTo(padL + cw, y); ctx.stroke();
+    const v = maxY * (1 - i / 4);
+    ctx.fillText(fmt(v, 0), 4, y + 3);
+  }
+  // Axe X
+  rows.forEach((r, i) => {
+    const x = padL + cw * (xs[i] - minX) / Math.max(1, maxX - minX);
+    if (i === 0 || i === rows.length - 1 || (rows.length > 6 && i % Math.ceil(rows.length / 6) === 0)) {
+      ctx.fillText(`A${r.yr}`, x - 8, padT + ch + 14);
+    }
+  });
+
+  function drawLine(ys, color, lw) {
+    ctx.strokeStyle = color; ctx.lineWidth = lw; ctx.beginPath();
+    ys.forEach((y, i) => {
+      const px = padL + cw * (xs[i] - minX) / Math.max(1, maxX - minX);
+      const py = padT + ch * (1 - y / maxY);
+      if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+    });
+    ctx.stroke();
+  }
+  drawLine(ysProprio, '#dc2626', 2);
+  drawLine(ysLoc, '#1d4ed8', 2);
+  drawLine(ysEquity, '#16a34a', 2);
+
+  // Légende
+  ctx.font = '11px -apple-system,sans-serif';
+  const items = [
+    { c: '#dc2626', t: 'Cumul payé proprio' },
+    { c: '#1d4ed8', t: useFlux ? 'Cumul payé locataire' : 'Placement alternatif' },
+    { c: '#16a34a', t: 'Equity (valeur − restant)' },
+  ];
+  let lx = padL + 4;
+  items.forEach(it => {
+    ctx.fillStyle = it.c; ctx.fillRect(lx, padT - 12, 10, 3);
+    ctx.fillStyle = '#475569';
+    ctx.fillText(it.t, lx + 14, padT - 8);
+    lx += ctx.measureText(it.t).width + 36;
+  });
+}
+
+// Câblage Module B
+['b-prixBien','b-fdn','b-travaux','b-garantie','b-apport','b-taux','b-duree','b-txAss','b-txAss2',
+ 'b-quot1','b-quot2','b-refiTaux','b-refiDuree','b-refiFrais','b-loyerAlt','b-inflLoyer',
+ 'b-charges','b-inflCharges','b-valeurAuj','b-rendAlt'].forEach(id => {
+  const el = $(id); if (el) el.addEventListener('input', bRecalc);
+});
+['b-dateAchat','b-dateAnalyse','b-refiDate'].forEach(id => {
+  const el = $(id); if (el) el.addEventListener('change', bRecalc);
+});
+$('b-twoBorrowers').addEventListener('change', () => {
+  $('b-borrower2-block').classList.toggle('hidden', !$('b-twoBorrowers').checked);
+  bRecalc();
+});
+$('b-refiToggle').addEventListener('change', () => {
+  $('b-refi-block').classList.toggle('hidden', !$('b-refiToggle').checked);
+  bRecalc();
+});
+document.querySelectorAll('[name=b-mode]').forEach(r => r.addEventListener('change', () => {
+  const isPlacement = document.querySelector('[name=b-mode]:checked').value === 'placement';
+  $('b-rendAltField').classList.toggle('hidden', !isPlacement);
+  $('b-mode-info').textContent = isPlacement
+    ? 'Mode placement : on suppose que si vous étiez resté locataire, vous auriez placé votre apport + chaque mois la différence entre TCO propriétaire et loyer locataire.'
+    : 'Mode flux seuls : on compare uniquement le cumul des dépenses propriétaire vs locataire, sans capitaliser le différentiel.';
+  bRecalc();
+}));
+
+// Init Module B
+function bInit() {
+  // Date analyse = aujourd'hui par défaut
+  const today = new Date();
+  const yyyy = today.getFullYear();
+  const mm = String(today.getMonth() + 1).padStart(2, '0');
+  $('b-dateAnalyse').value = `${yyyy}-${mm}`;
+  $('b-quot1').value = 100;
+  $('b-quot2').value = 100;
+  $('b-txAss').value = 0.30;
+  $('b-txAss2').value = 0.30;
+  $('b-inflLoyer').value = 2.0;
+  $('b-inflCharges').value = 2.0;
+  $('b-rendAlt').value = 3.0;
+}
+
+// Restore route from hash on load
+function initRoute() {
+  const h = window.location.hash;
+  if (h === '#mod-A') navigate('A');
+  else if (h === '#mod-B') navigate('B');
+  else if (h === '#mod-C') navigate('C');
+  else navigate('landing');
+}
+
 // ─── Init ────────────────────────────────────────────────────────────────────
 buildRisqueTable();
+updateRisqueCardVisibility();
+updateEnergyFields();
 $('fraisDossier').value = 850;
 $('txAss').value = 0.30;
+$('quot1').value = 100;
+$('txAss2').value = 0.30;
+$('quot2').value = 100;
+$('tauxRecupGar').value = 73;
+$('fraisMainlevee').value = 600;
 $('vacance').value = 3;
 $('pno').value = 200;
 $('assHabLoc').value = 200;
 $('appreciation').value = 1.5;
+$('inflLoyer').value = 2.0;
 $('travauxAn').value = 1500;
 $('fraisVente').value = 5;
 $('rendAlt').value = 3;
 $('anneesRp').value = 5;
 $('anneeSimu').value = 10;
 recalc();
+bInit();
+initRoute();
 </script>
 </body>
 </html>
