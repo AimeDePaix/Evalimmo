@@ -65,6 +65,29 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .stub ul{text-align:left;max-width:520px;margin:18px auto;font-size:.85rem;color:var(--g600);line-height:1.7}
 .stub ul li{padding-left:8px}
 .stub-tag{display:inline-block;background:var(--orange-pale);color:var(--orange);font-size:.72rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:4px 10px;border-radius:99px;margin-bottom:14px}
+
+/* Module C — liste de prêts */
+.c-loan-row{display:grid;gap:8px;align-items:center;margin-bottom:6px}
+.c-loan-row.simple{grid-template-columns:1.2fr 100px 130px 32px 32px}
+.c-loan-row.detail{grid-template-columns:1.2fr 110px 70px 70px 130px 32px 32px}
+.c-loan-row input{padding:7px 10px;border:1.5px solid var(--g200);border-radius:6px;font-size:.85rem;background:#fff;color:var(--g800);width:100%;font-family:inherit}
+.c-loan-row input:focus{outline:none;border-color:var(--blue-l);box-shadow:0 0 0 3px rgba(59,130,246,.1)}
+.c-loan-del,.c-loan-mode{border:1px solid var(--g200);border-radius:6px;width:30px;height:32px;font-size:.95rem;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1;padding:0;background:#fff;color:var(--g500)}
+.c-loan-del{background:var(--red-pale);color:var(--red);border-color:var(--red-b)}
+.c-loan-del:hover{background:var(--red);color:#fff}
+.c-loan-mode:hover{background:var(--blue-pale);color:var(--blue);border-color:var(--blue-b)}
+.c-loan-derived{grid-column:1/-1;font-size:.72rem;color:var(--g500);padding:2px 4px 6px 4px;font-style:italic}
+.c-loan-block{padding:8px 10px;background:var(--g50);border-radius:8px;margin-bottom:8px}
+.c-loan-block.detail-mode{background:var(--blue-pale);border:1px solid var(--blue-b)}
+.c-loans-headers{padding:0 10px}
+.c-loans-header-row{display:grid;gap:8px;padding:0 0 6px 0;border-bottom:1px solid var(--g200);margin-bottom:8px}
+.c-loans-header-row.simple{grid-template-columns:1.2fr 100px 130px 32px 32px}
+.c-loans-header-row.detail{grid-template-columns:1.2fr 110px 70px 70px 130px 32px 32px}
+.c-loans-header-row > div{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--g500)}
+.btn-add{background:var(--blue-pale);color:var(--blue);border:1px dashed var(--blue-b);border-radius:8px;padding:8px 14px;font-size:.82rem;font-weight:600;cursor:pointer;transition:all .15s;font-family:inherit}
+.btn-add:hover{background:var(--blue);color:#fff;border-color:var(--blue);border-style:solid}
+.btn-ex{background:#fff;color:var(--g700);border:1.5px solid var(--g200);border-radius:8px;padding:8px 14px;font-size:.78rem;font-weight:600;cursor:pointer;transition:all .15s;font-family:inherit}
+.btn-ex:hover{background:var(--g50);border-color:var(--g300)}
 .sec-hdr{display:flex;align-items:flex-start;gap:12px;margin-bottom:14px}
 .sec-num{width:28px;height:28px;background:var(--blue);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:800;flex-shrink:0;margin-top:2px}
 .sec-hdr h2{font-size:1rem;font-weight:700;color:var(--g900)}
@@ -229,12 +252,12 @@ footer{text-align:center;padding-bottom:40px;font-size:.72rem;color:var(--g400);
       <div class="mod-desc">Vous êtes déjà propriétaire et voulez analyser a posteriori à partir de quand votre achat est devenu plus rentable que la location. Inclut refinancement, inflation des loyers et placement alternatif.</div>
       <div class="mod-cta">Lancer l'analyse →</div>
     </div>
-    <div class="mod-card disabled" data-route="C">
-      <span class="mod-badge soon">Bientôt</span>
+    <div class="mod-card" data-route="C">
+      <span class="mod-badge live">Disponible</span>
       <div class="mod-ico">💼</div>
       <div class="mod-title">Capacité d'emprunt & projets</div>
-      <div class="mod-desc">Multi-propriétaire : visualisez vos prêts en cours, votre taux d'effort, et projetez quand vous dégagerez la capacité d'emprunt nécessaire pour un nouveau projet.</div>
-      <div class="mod-cta">En construction</div>
+      <div class="mod-desc">Multi-propriétaire : visualisez vos prêts en cours, votre taux d'endettement, et projetez quand vous dégagerez la capacité d'emprunt nécessaire pour un nouveau projet.</div>
+      <div class="mod-cta">Lancer la simulation →</div>
     </div>
   </div>
 </div>
@@ -478,7 +501,7 @@ footer{text-align:center;padding-bottom:40px;font-size:.72rem;color:var(--g400);
     <div class="card-t"><span class="ico">📈</span> Évolution année par année</div>
     <div class="card-b" style="padding:0">
       <div style="overflow-x:auto">
-        <table class="proj-tbl">
+        <table class="ptbl">
           <thead>
             <tr>
               <th>Année</th>
@@ -510,20 +533,229 @@ footer{text-align:center;padding-bottom:40px;font-size:.72rem;color:var(--g400);
 
 </div><!-- /module-b -->
 
-<!-- ══════════ MODULE C (stub) ══════════ -->
-<div class="stub" id="module-c" style="display:none">
-  <div class="stub-tag">En construction</div>
-  <div class="stub-ico">💼</div>
-  <h2>Capacité d'emprunt & projets</h2>
-  <p>Pour les multi-propriétaires : tableau de concomitance des prêts en cours, taux d'effort, reste à vivre, et projection de la capacité d'emprunt future. Sera inclus :</p>
-  <ul>
-    <li>🏠 Saisie du patrimoine actuel (RP + locatifs)</li>
-    <li>📋 Tableau des prêts en cours avec dates de fin</li>
-    <li>📐 Taux d'endettement, taux d'effort, reste à vivre</li>
-    <li>⏱️ Projection : quand puis-je faire un nouveau projet ?</li>
-    <li>💡 Simulation de capacité d'emprunt selon revenus + patrimoine</li>
-  </ul>
-</div>
+<!-- ══════════ MODULE C ══════════ -->
+<div class="app" id="module-c" style="display:none">
+
+<section class="sec" id="c-s1">
+  <div class="sec-hdr">
+    <div class="sec-num">1</div>
+    <div>
+      <h2>Profil financier</h2>
+      <p>Vos revenus, votre foyer, vos revenus locatifs.</p>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-t"><span class="ico">💶</span> Revenus & foyer</div>
+    <div class="card-b">
+      <div class="grid2" style="margin-bottom:10px">
+        <div class="field">
+          <label>Salaire net mensuel — emprunteur 1</label>
+          <div class="iw"><input type="number" id="c-sal1" placeholder="4 000" min="0" step="100"><span class="u">€/mois</span></div>
+        </div>
+        <div class="field">
+          <label>Salaire net mensuel — emprunteur 2 <span class="hint">0 si seul</span></label>
+          <div class="iw"><input type="number" id="c-sal2" placeholder="3 000" min="0" step="100"><span class="u">€/mois</span></div>
+        </div>
+      </div>
+      <div class="grid2" style="margin-bottom:10px">
+        <div class="field">
+          <label>Nombre d'adultes au foyer</label>
+          <div class="iw"><input type="number" id="c-adultes" placeholder="2" min="1" max="4" step="1"><span class="u"></span></div>
+        </div>
+        <div class="field">
+          <label>Nombre d'enfants à charge</label>
+          <div class="iw"><input type="number" id="c-enfants" placeholder="0" min="0" max="10" step="1"><span class="u"></span></div>
+        </div>
+      </div>
+      <div class="sep"></div>
+      <div class="sub" style="margin-bottom:6px">Revenus locatifs (biens existants)</div>
+      <div class="grid2" style="margin-bottom:10px">
+        <div class="field">
+          <label>Loyers nets totaux perçus <span class="hint">somme des locatifs, charges déduites</span></label>
+          <div class="iw"><input type="number" id="c-loyers" placeholder="0" min="0" step="50"><span class="u">€/mois</span></div>
+        </div>
+        <div class="field">
+          <label>Pondération bancaire <span class="hint">les banques retiennent ~70 % des loyers</span></label>
+          <div class="iw"><input type="number" id="c-pondLoyers" placeholder="70" min="0" max="100" step="5"><span class="u">%</span></div>
+        </div>
+      </div>
+      <div class="sep"></div>
+      <div class="sub" style="margin-bottom:6px">Évolution projetée</div>
+      <div class="grid2">
+        <div class="field">
+          <label>Croissance annuelle des salaires <span class="hint">progression moyenne sur 25 ans</span></label>
+          <div class="iw"><input type="number" id="c-croissSal" placeholder="1.5" min="-5" max="15" step="0.1"><span class="u">%/an</span></div>
+        </div>
+        <div class="field">
+          <label>Croissance annuelle des loyers <span class="hint">IRL réel ~2 %/an</span></label>
+          <div class="iw"><input type="number" id="c-croissLoyers" placeholder="2.0" min="-5" max="15" step="0.1"><span class="u">%/an</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="c-s2">
+  <div class="sec-hdr">
+    <div class="sec-num">2</div>
+    <div>
+      <h2>Prêts en cours</h2>
+      <p>Listez tous vos crédits actifs. Mensualité totale = capital + intérêts + assurance.</p>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-t"><span class="ico">🏦</span> Crédits actifs</div>
+    <div class="card-b">
+      <div class="info neutral" style="margin-bottom:10px;font-size:.78rem">
+        Saisie rapide : libellé du prêt + mensualité totale (capital + intérêts + assurance) + date d'échéance.
+        Cliquez sur ⚙ d'une ligne pour la passer en mode <strong>détaillé</strong> (capital + taux + durée + date début → mensualité et échéance calculées).
+      </div>
+      <div id="c-loans-list"></div>
+      <button type="button" id="c-loan-add" class="btn-add">+ Ajouter un prêt</button>
+      <div style="margin-top:12px">
+        <button type="button" id="c-load-example" class="btn-ex">⚡ Charger l'exemple : Antoine (150 k€/an, T4 Paris + T2 Rennes)</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="c-s3">
+  <div class="sec-hdr">
+    <div class="sec-num">3</div>
+    <div>
+      <h2>Critères bancaires</h2>
+      <p>Limites utilisées par les banques françaises (HCSF) pour valider un dossier.</p>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-t"><span class="ico">📐</span> Limites prudentielles</div>
+    <div class="card-b">
+      <div class="grid3">
+        <div class="field">
+          <label>Taux d'endettement max <span class="hint">norme HCSF</span></label>
+          <div class="iw"><input type="number" id="c-txEndetMax" placeholder="35" min="20" max="50" step="0.5"><span class="u">%</span></div>
+        </div>
+        <div class="field">
+          <label>Reste à vivre min / adulte</label>
+          <div class="iw"><input type="number" id="c-ravAdulte" placeholder="800" min="0" step="50"><span class="u">€/mois</span></div>
+        </div>
+        <div class="field">
+          <label>Reste à vivre min / enfant</label>
+          <div class="iw"><input type="number" id="c-ravEnfant" placeholder="300" min="0" step="50"><span class="u">€/mois</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="c-s4">
+  <div class="sec-hdr">
+    <div class="sec-num">4</div>
+    <div>
+      <h2>Hypothèses nouveau projet</h2>
+      <p>Conditions du futur prêt envisagé.</p>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-t"><span class="ico">🎯</span> Conditions du futur emprunt</div>
+    <div class="card-b">
+      <div class="grid3">
+        <div class="field">
+          <label>Taux d'emprunt</label>
+          <div class="iw"><input type="number" id="c-projTaux" placeholder="3.5" min="0" max="15" step="0.05"><span class="u">%</span></div>
+        </div>
+        <div class="field">
+          <label>Durée</label>
+          <div class="iw"><input type="number" id="c-projDuree" placeholder="25" min="5" max="30" step="1"><span class="u">ans</span></div>
+        </div>
+        <div class="field">
+          <label>Taux assurance</label>
+          <div class="iw"><input type="number" id="c-projAss" placeholder="0.30" min="0" max="2" step="0.01"><span class="u">%/an</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="c-s5">
+  <div class="sec-hdr">
+    <div class="sec-num">5</div>
+    <div>
+      <h2>Résultats</h2>
+      <p>Capacité d'emprunt actuelle et projection sur 25 ans.</p>
+    </div>
+  </div>
+
+  <div class="kpi-row k3" style="margin-bottom:18px">
+    <div class="kpi" id="c-kpi-endet-box"><div class="kl">Taux d'endettement actuel</div><div class="kv" id="c-kpi-endet">—</div><div class="ks" id="c-kpi-endet-s">limite : 35 %</div></div>
+    <div class="kpi" id="c-kpi-rav-box"><div class="kl">Reste à vivre actuel</div><div class="kv" id="c-kpi-rav">—</div><div class="ks" id="c-kpi-rav-s">après mensualités</div></div>
+    <div class="kpi kblue"><div class="kl">Capacité d'emprunt actuelle</div><div class="kv" id="c-kpi-cap">—</div><div class="ks" id="c-kpi-cap-s">aux conditions saisies</div></div>
+  </div>
+
+  <div class="card" style="margin-bottom:14px">
+    <div class="card-t"><span class="ico">🎯</span> Capacité réelle au taux du marché</div>
+    <div class="card-b">
+      <div class="info neutral" style="margin-bottom:12px;font-size:.78rem">Pour chaque combinaison taux × durée, voici le projet maximal réalisable aujourd'hui et le taux d'endettement résultant.</div>
+      <div class="grid2" style="margin-bottom:14px">
+        <div class="field">
+          <label>Taux marché bas <span class="hint">scénario favorable</span></label>
+          <div class="iw"><input type="number" id="c-tauxBas" placeholder="3.0" min="0" max="15" step="0.05"><span class="u">%</span></div>
+        </div>
+        <div class="field">
+          <label>Taux marché haut <span class="hint">scénario prudent</span></label>
+          <div class="iw"><input type="number" id="c-tauxHaut" placeholder="3.5" min="0" max="15" step="0.05"><span class="u">%</span></div>
+        </div>
+      </div>
+      <div style="overflow-x:auto">
+        <table class="ptbl" id="c-matrix">
+          <thead>
+            <tr>
+              <th>Configuration</th>
+              <th>Capital empruntable</th>
+              <th>Mensualité</th>
+              <th>Taux d'endettement résultant</th>
+              <th>Reste à vivre résultant</th>
+            </tr>
+          </thead>
+          <tbody id="c-matrix-body"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:14px">
+    <div class="card-t"><span class="ico">📊</span> Projection capacité d'emprunt</div>
+    <div class="card-b">
+      <div class="chart-wrap"><canvas id="c-chart" height="280"></canvas></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-t"><span class="ico">📋</span> Détail année par année</div>
+    <div class="card-b" style="padding:0">
+      <div style="overflow-x:auto">
+        <table class="ptbl">
+          <thead>
+            <tr>
+              <th>Année</th>
+              <th>Mensualités prêts actifs</th>
+              <th>Taux d'endettement</th>
+              <th>Reste à vivre</th>
+              <th>Mensualité dispo</th>
+              <th>Capacité d'emprunt</th>
+              <th>Évènement</th>
+            </tr>
+          </thead>
+          <tbody id="c-proj-body">
+            <tr><td colspan="7" style="text-align:center;padding:24px;color:var(--g400);font-size:.8rem">Renseignez vos revenus et prêts pour voir la projection.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+</div><!-- /module-c -->
 
 <!-- ══════════ MODULE A ══════════ -->
 <div class="app" id="module-a" style="display:none">
@@ -1740,6 +1972,7 @@ function navigate(route) {
   } else if (route === 'C') {
     $('module-c').style.display = 'block';
     $('back-bar').style.display = 'flex';
+    if (typeof cRecalc === 'function') setTimeout(cRecalc, 0);
   }
   // Update header
   const meta = ROUTES[route] || ROUTES.landing;
@@ -2041,6 +2274,437 @@ function bInit() {
   $('b-rendAlt').value = 3.0;
 }
 
+// ─── MODULE C : Capacité d'emprunt ─────────────────────────────────────────
+function cGet(id) { return parseFloat($(id)?.value) || 0; }
+let cLoans = [];  // [{id, label, mens, dateFin}]
+let cLoanCounter = 0;
+
+function cMonthIdx(yyyymm) {
+  if (!yyyymm) return null;
+  const [y, m] = yyyymm.split('-').map(Number);
+  return y * 12 + (m - 1);
+}
+function cTodayIdx() {
+  const d = new Date();
+  return d.getFullYear() * 12 + d.getMonth();
+}
+
+function cAddLoan(opts = {}) {
+  const id = ++cLoanCounter;
+  cLoans.push({
+    id,
+    mode: opts.mode || 'simple',
+    label: opts.label || '',
+    // Simple mode
+    mens: opts.mens || '',
+    dateFin: opts.dateFin || '',
+    // Detail mode
+    capital: opts.capital || '',
+    taux: opts.taux || '',
+    dureeAns: opts.dureeAns || '',
+    dateDebut: opts.dateDebut || '',
+  });
+  cRenderLoans();
+}
+function cDelLoan(id) {
+  cLoans = cLoans.filter(l => l.id !== id);
+  cRenderLoans();
+  cRecalc();
+}
+// Calcule mensualité + dateFin effectives selon le mode
+function cComputeLoanFields(l) {
+  if (l.mode === 'detail') {
+    const cap = parseFloat(l.capital) || 0;
+    const tx  = parseFloat(l.taux) || 0;
+    const dur = parseFloat(l.dureeAns) || 0;
+    const mens = (cap > 0 && dur > 0) ? calcMensualite(cap, tx, dur) : 0;
+    let dateFin = '';
+    if (l.dateDebut && dur > 0) {
+      const [y, m] = l.dateDebut.split('-').map(Number);
+      const totalMonths = (y * 12 + (m - 1)) + Math.round(dur * 12);
+      const endY = Math.floor(totalMonths / 12);
+      const endM = (totalMonths % 12) + 1;
+      dateFin = `${endY}-${String(endM).padStart(2, '0')}`;
+    }
+    return { mens, dateFin };
+  }
+  return { mens: parseFloat(l.mens) || 0, dateFin: l.dateFin || '' };
+}
+function cToggleLoanMode(id) {
+  const l = cLoans.find(x => x.id === id);
+  if (!l) return;
+  l.mode = l.mode === 'detail' ? 'simple' : 'detail';
+  cRenderLoans();
+  cRecalc();
+}
+function cRenderLoans() {
+  const list = $('c-loans-list');
+  if (!cLoans.length) {
+    list.innerHTML = '<div style="color:var(--g400);font-size:.82rem;padding:8px 0 12px">Aucun prêt en cours. Cliquez sur « + Ajouter un prêt » pour commencer.</div>';
+    return;
+  }
+  list.innerHTML = cLoans.map(l => {
+    if (l.mode === 'detail') {
+      const computed = cComputeLoanFields(l);
+      const derived = computed.mens > 0
+        ? `→ Mensualité calculée : <strong>${fmt(computed.mens, 0)} €/mois</strong>${computed.dateFin ? ` · fin : <strong>${computed.dateFin}</strong>` : ''}`
+        : '→ Renseignez capital + taux + durée + date début';
+      return `
+        <div class="c-loan-block detail-mode">
+          <div class="c-loans-header-row detail">
+            <div>Prêt</div>
+            <div>Capital</div>
+            <div>Taux</div>
+            <div>Durée</div>
+            <div>Date début</div>
+            <div>Mode</div>
+            <div></div>
+          </div>
+          <div class="c-loan-row detail" data-id="${l.id}">
+            <input type="text" class="c-loan-label" placeholder="Libellé (ex: RP T4 Paris)" value="${l.label || ''}">
+            <input type="number" class="c-loan-capital" placeholder="600 000" min="0" step="1000" value="${l.capital || ''}">
+            <input type="number" class="c-loan-taux" placeholder="1.5" min="0" max="15" step="0.05" value="${l.taux || ''}">
+            <input type="number" class="c-loan-duree" placeholder="25" min="1" max="30" step="1" value="${l.dureeAns || ''}">
+            <input type="month" class="c-loan-debut" value="${l.dateDebut || ''}" title="Date de début du prêt">
+            <button type="button" class="c-loan-mode" title="Passer en mode simple (mensualité directe)">⚙</button>
+            <button type="button" class="c-loan-del" title="Supprimer">×</button>
+            <div class="c-loan-derived">${derived}</div>
+          </div>
+        </div>`;
+    } else {
+      return `
+        <div class="c-loan-block">
+          <div class="c-loans-header-row simple">
+            <div>Prêt</div>
+            <div>Mensualité</div>
+            <div>Date d'échéance</div>
+            <div>Mode</div>
+            <div></div>
+          </div>
+          <div class="c-loan-row simple" data-id="${l.id}">
+            <input type="text" class="c-loan-label" placeholder="Libellé (ex: RP T4 Paris)" value="${l.label || ''}">
+            <input type="number" class="c-loan-mens" placeholder="900" min="0" step="50" value="${l.mens || ''}">
+            <input type="month" class="c-loan-date" value="${l.dateFin || ''}">
+            <button type="button" class="c-loan-mode" title="Passer en mode détaillé (capital + taux + durée)">⚙</button>
+            <button type="button" class="c-loan-del" title="Supprimer">×</button>
+          </div>
+        </div>`;
+    }
+  }).join('');
+  // Wire inputs
+  list.querySelectorAll('.c-loan-row').forEach(row => {
+    const id = parseInt(row.getAttribute('data-id'));
+    const get = sel => row.querySelector(sel);
+    const handle = (sel, key, recalc = false) => {
+      const el = get(sel);
+      if (!el) return;
+      el.addEventListener('input', e => {
+        const l = cLoans.find(x => x.id === id);
+        if (!l) return;
+        l[key] = e.target.value;
+        if (l.mode === 'detail') {
+          // Mettre à jour le texte calculé
+          const derivedEl = row.querySelector('.c-loan-derived');
+          const c = cComputeLoanFields(l);
+          if (derivedEl) {
+            derivedEl.innerHTML = c.mens > 0
+              ? `→ Mensualité calculée : <strong>${fmt(c.mens, 0)} €/mois</strong>${c.dateFin ? ` · fin : <strong>${c.dateFin}</strong>` : ''}`
+              : '→ Renseignez capital + taux + durée + date début';
+          }
+        }
+        if (recalc) cRecalc();
+      });
+    };
+    // Common
+    handle('.c-loan-label', 'label', false);
+    // Simple mode
+    handle('.c-loan-mens', 'mens', true);
+    handle('.c-loan-date', 'dateFin', true);
+    // Detail mode
+    handle('.c-loan-capital', 'capital', true);
+    handle('.c-loan-taux', 'taux', true);
+    handle('.c-loan-duree', 'dureeAns', true);
+    handle('.c-loan-debut', 'dateDebut', true);
+    // Mode toggle + delete
+    const modeBtn = get('.c-loan-mode');
+    if (modeBtn) modeBtn.addEventListener('click', () => cToggleLoanMode(id));
+    const delBtn = get('.c-loan-del');
+    if (delBtn) delBtn.addEventListener('click', () => cDelLoan(id));
+  });
+}
+
+let cLastProjData = null;
+
+function cRecalc() {
+  const sal1 = cGet('c-sal1');
+  const sal2 = cGet('c-sal2');
+  const adultes = parseInt($('c-adultes').value) || 1;
+  const enfants = parseInt($('c-enfants').value) || 0;
+  const loyers = cGet('c-loyers');
+  const pondLoyers = (cGet('c-pondLoyers') || 70) / 100;
+  const croissSal    = cGet('c-croissSal') / 100;
+  const croissLoyers = cGet('c-croissLoyers') / 100;
+
+  const txEndetMax = (cGet('c-txEndetMax') || 35) / 100;
+  const ravAdulte  = cGet('c-ravAdulte');
+  const ravEnfant  = cGet('c-ravEnfant');
+  const ravMin     = adultes * ravAdulte + enfants * ravEnfant;
+
+  const projTaux  = cGet('c-projTaux');
+  const projDuree = cGet('c-projDuree') || 25;
+  const projAss   = cGet('c-projAss');
+
+  const todayIdx = cTodayIdx();
+  const yearsAhead = 25;
+  const projection = [];
+
+  // Facteur mensualité (capital × facteur = mensualité totale crédit + assurance)
+  const r = projTaux / 100 / 12;
+  const n = projDuree * 12;
+  const factorCredit = (r > 0 && n > 0) ? r / (1 - Math.pow(1 + r, -n)) : (n > 0 ? 1 / n : 0);
+  const factorAss = projAss / 100 / 12;
+  const factor = factorCredit + factorAss;
+
+  // Pré-calcule les mens + dateFin de chaque prêt (selon le mode)
+  const loansResolved = cLoans.map(l => {
+    const c = cComputeLoanFields(l);
+    return { label: l.label, mens: c.mens, endIdx: cMonthIdx(c.dateFin) };
+  });
+
+  for (let yr = 0; yr <= yearsAhead; yr++) {
+    const idxAtYr = todayIdx + yr * 12;
+    let mensTotal = 0;
+    let evenement = '';
+    loansResolved.forEach(l => {
+      if (l.endIdx !== null && l.endIdx >= idxAtYr) mensTotal += l.mens;
+      if (l.endIdx !== null && yr > 0) {
+        const prevIdx = todayIdx + (yr - 1) * 12;
+        if (l.endIdx >= prevIdx && l.endIdx < idxAtYr) {
+          evenement += (evenement ? ', ' : '') + `🏁 fin "${l.label || 'prêt'}"`;
+        }
+      }
+    });
+
+    // Revenus indexés à l'année yr
+    const facteurSal = Math.pow(1 + croissSal, yr);
+    const facteurLoy = Math.pow(1 + croissLoyers, yr);
+    const sal1Yr  = sal1 * facteurSal;
+    const sal2Yr  = sal2 * facteurSal;
+    const loyersYr = loyers * facteurLoy;
+    const revenuPondereYr = sal1Yr + sal2Yr + loyersYr * pondLoyers;
+    const revenuTotalYr   = sal1Yr + sal2Yr + loyersYr;
+
+    const txEndet = revenuPondereYr > 0 ? mensTotal / revenuPondereYr : 0;
+    const ravActuel = revenuTotalYr - mensTotal;
+    const mensDispoEndet = Math.max(0, txEndetMax * revenuPondereYr - mensTotal);
+    const mensDispoRAV   = Math.max(0, revenuTotalYr - mensTotal - ravMin);
+    const mensDispo      = Math.min(mensDispoEndet, mensDispoRAV);
+    const capacity = factor > 0 ? mensDispo / factor : 0;
+
+    projection.push({ yr, mensTotal, txEndet, ravActuel, mensDispo, capacity, evenement, revenuPondereYr });
+  }
+  cLastProjData = projection;
+
+  // KPIs (année 0 = aujourd'hui)
+  const cur = projection[0];
+  set('c-kpi-endet', (cur.txEndet * 100).toFixed(1) + ' %');
+  set('c-kpi-endet-s', `limite : ${(txEndetMax * 100).toFixed(0)} %`);
+  $('c-kpi-endet-box').className = 'kpi ' + (cur.txEndet > txEndetMax ? 'kred' : cur.txEndet > txEndetMax * 0.85 ? '' : 'kgreen');
+
+  set('c-kpi-rav', fmt(cur.ravActuel, 0));
+  set('c-kpi-rav-s', `min requis : ${fmt(ravMin, 0)} €`);
+  $('c-kpi-rav-box').className = 'kpi ' + (cur.ravActuel < ravMin ? 'kred' : cur.ravActuel < ravMin * 1.3 ? '' : 'kgreen');
+
+  set('c-kpi-cap', fmt(cur.capacity, 0));
+  set('c-kpi-cap-s', `aux conditions ${projTaux} % / ${projDuree} ans`);
+
+  // Tableau
+  const tbody = $('c-proj-body');
+  if (projection[0].revenuPondereYr === 0) {
+    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:24px;color:var(--g400);font-size:.8rem">Renseignez vos revenus pour voir la projection.</td></tr>';
+  } else {
+    const todayY = new Date().getFullYear();
+    tbody.innerHTML = projection.map(r => {
+      const yrLabel = r.yr === 0 ? 'Aujourd\'hui' : `+${r.yr} an${r.yr > 1 ? 's' : ''} (${todayY + r.yr})`;
+      const endetCls = r.txEndet > txEndetMax ? 'neg' : '';
+      return `<tr${r.evenement ? ' class="travaux-yr"' : ''}>
+        <td>${yrLabel}</td>
+        <td>${fmt(r.mensTotal, 0)}</td>
+        <td class="${endetCls}">${(r.txEndet * 100).toFixed(1)} %</td>
+        <td>${fmt(r.ravActuel, 0)}</td>
+        <td>${fmt(r.mensDispo, 0)}</td>
+        <td><strong>${fmt(r.capacity, 0)}</strong></td>
+        <td style="font-size:.75rem;color:var(--g500)">${r.evenement || ''}</td>
+      </tr>`;
+    }).join('');
+  }
+
+  // Matrice "Capacité réelle au taux du marché"
+  const tauxBas = cGet('c-tauxBas');
+  const tauxHaut = cGet('c-tauxHaut');
+  const cur0 = projection[0];
+  const matrixCombos = [
+    { dur: 20, taux: tauxBas },
+    { dur: 25, taux: tauxBas },
+    { dur: 20, taux: tauxHaut },
+    { dur: 25, taux: tauxHaut },
+  ];
+  const matrixRows = matrixCombos.map(c => {
+    const rM = c.taux / 100 / 12;
+    const nM = c.dur * 12;
+    const fCredit = (rM > 0 && nM > 0) ? rM / (1 - Math.pow(1 + rM, -nM)) : (nM > 0 ? 1 / nM : 0);
+    const fAss = projAss / 100 / 12;
+    const fac = fCredit + fAss;
+    const cap = fac > 0 ? cur0.mensDispo / fac : 0;
+    const newMens = cur0.mensDispo;  // par construction = la mens dispo
+    const newMensTot = cur0.mensTotal + newMens;
+    const newEndet = cur0.revenuPondereYr > 0 ? newMensTot / cur0.revenuPondereYr : 0;
+    const newRAV = cur0.ravActuel - newMens;
+    return { ...c, cap, newMens, newEndet, newRAV };
+  });
+  const matBody = $('c-matrix-body');
+  if (matBody) {
+    if (cur0.mensDispo === 0) {
+      matBody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:20px;color:var(--orange);font-size:.82rem">Capacité disponible nulle aux conditions actuelles : aucun nouveau projet possible immédiatement.</td></tr>';
+    } else {
+      matBody.innerHTML = matrixRows.map(r => {
+        const endetCls = r.newEndet > txEndetMax ? 'neg' : 'pos';
+        return `<tr>
+          <td><strong>${r.dur} ans</strong> à <strong>${r.taux} %</strong></td>
+          <td><strong>${fmt(r.cap, 0)}</strong></td>
+          <td>${fmt(r.newMens, 0)} €/mois</td>
+          <td class="${endetCls}">${(r.newEndet * 100).toFixed(1)} %</td>
+          <td>${fmt(r.newRAV, 0)} €</td>
+        </tr>`;
+      }).join('');
+    }
+  }
+
+  cDrawChart(projection);
+}
+
+function cDrawChart(rows) {
+  const canvas = $('c-chart');
+  if (!canvas || !rows || !rows.length) return;
+  const dpr = window.devicePixelRatio || 1;
+  const W = Math.max(300, canvas.parentElement.clientWidth - 36);
+  const H = 280;
+  canvas.width = W * dpr; canvas.height = H * dpr;
+  canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
+  const ctx = canvas.getContext('2d');
+  ctx.scale(dpr, dpr);
+  ctx.clearRect(0, 0, W, H);
+
+  const padL = 70, padR = 20, padT = 24, padB = 36;
+  const cw = W - padL - padR, ch = H - padT - padB;
+  const ys = rows.map(r => r.capacity);
+  const maxY = Math.max(...ys, 1);
+  const minX = 0, maxX = rows.length - 1;
+
+  ctx.strokeStyle = '#e2e8f0'; ctx.lineWidth = 1;
+  ctx.font = '10px -apple-system,sans-serif'; ctx.fillStyle = '#94a3b8';
+  for (let i = 0; i <= 4; i++) {
+    const y = padT + ch * i / 4;
+    ctx.beginPath(); ctx.moveTo(padL, y); ctx.lineTo(padL + cw, y); ctx.stroke();
+    ctx.fillText(fmt(maxY * (1 - i / 4), 0), 4, y + 3);
+  }
+  rows.forEach((r, i) => {
+    if (i === 0 || i === rows.length - 1 || i % 5 === 0) {
+      const x = padL + cw * i / Math.max(1, maxX);
+      ctx.fillText(`+${r.yr}a`, x - 8, padT + ch + 14);
+    }
+  });
+
+  // Aire
+  ctx.fillStyle = 'rgba(29,78,216,0.12)';
+  ctx.beginPath();
+  ctx.moveTo(padL, padT + ch);
+  ys.forEach((y, i) => {
+    const px = padL + cw * i / Math.max(1, maxX);
+    const py = padT + ch * (1 - y / maxY);
+    ctx.lineTo(px, py);
+  });
+  ctx.lineTo(padL + cw, padT + ch);
+  ctx.closePath();
+  ctx.fill();
+
+  // Ligne
+  ctx.strokeStyle = '#1d4ed8'; ctx.lineWidth = 2;
+  ctx.beginPath();
+  ys.forEach((y, i) => {
+    const px = padL + cw * i / Math.max(1, maxX);
+    const py = padT + ch * (1 - y / maxY);
+    if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+  });
+  ctx.stroke();
+
+  // Marqueurs sur les évènements (fin de prêts)
+  rows.forEach((r, i) => {
+    if (r.evenement) {
+      const px = padL + cw * i / Math.max(1, maxX);
+      const py = padT + ch * (1 - r.capacity / maxY);
+      ctx.fillStyle = '#16a34a';
+      ctx.beginPath(); ctx.arc(px, py, 4, 0, 2 * Math.PI); ctx.fill();
+    }
+  });
+
+  // Légende
+  ctx.font = '11px -apple-system,sans-serif';
+  ctx.fillStyle = '#1d4ed8'; ctx.fillRect(padL + 4, 6, 10, 3);
+  ctx.fillStyle = '#475569'; ctx.fillText('Capacité d\'emprunt (€)', padL + 18, 10);
+  ctx.fillStyle = '#16a34a'; ctx.beginPath(); ctx.arc(padL + 180, 8, 3, 0, 2 * Math.PI); ctx.fill();
+  ctx.fillStyle = '#475569'; ctx.fillText('Fin d\'un prêt', padL + 188, 10);
+}
+
+// Câblage Module C
+['c-sal1','c-sal2','c-adultes','c-enfants','c-loyers','c-pondLoyers','c-croissSal','c-croissLoyers',
+ 'c-txEndetMax','c-ravAdulte','c-ravEnfant','c-projTaux','c-projDuree','c-projAss',
+ 'c-tauxBas','c-tauxHaut'].forEach(id => {
+  const el = $(id); if (el) el.addEventListener('input', cRecalc);
+});
+$('c-loan-add').addEventListener('click', () => cAddLoan());
+$('c-load-example').addEventListener('click', () => {
+  // Persona Antoine : couple, 150 k€/an net total, RP T4 Paris + T2 locatif Rennes
+  // 150 k€/an net = 12 500 €/mois. Réparti 7 500 (Antoine) + 5 000 (compagne)
+  $('c-sal1').value = 7500;
+  $('c-sal2').value = 5000;
+  $('c-adultes').value = 2;
+  $('c-enfants').value = 2;
+  $('c-loyers').value = 750;          // T2 Rennes ~750 €/mois net
+  $('c-pondLoyers').value = 70;
+  $('c-croissSal').value = 1.5;
+  $('c-croissLoyers').value = 2.0;
+  cLoans = [];
+  const today = new Date();
+  function dateMonths(monthsFromNow) {
+    const d = new Date(today.getFullYear(), today.getMonth() + monthsFromNow, 1);
+    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
+  }
+  // RP T4 Paris en mode détaillé (souscrit il y a 5 ans), T2 Rennes en mode simple
+  cAddLoan({ mode: 'detail', label: 'RP T4 Paris',   capital: 600000, taux: 1.5, dureeAns: 25, dateDebut: dateMonths(-5 * 12) });
+  cAddLoan({ mode: 'simple', label: 'T2 Rennes (locatif)', mens: 900, dateFin: dateMonths(12 * 12) });
+  cRecalc();
+});
+
+function cInit() {
+  $('c-sal1').value = 6000;            // défaut foyer 120 k€/an net = 10 k€/mois
+  $('c-sal2').value = 4000;
+  $('c-pondLoyers').value = 70;
+  $('c-croissSal').value = 1.5;
+  $('c-croissLoyers').value = 2.0;
+  $('c-txEndetMax').value = 35;
+  $('c-ravAdulte').value = 800;
+  $('c-ravEnfant').value = 300;
+  $('c-projTaux').value = 3.5;
+  $('c-projDuree').value = 25;
+  $('c-projAss').value = 0.30;
+  $('c-tauxBas').value = 3.0;
+  $('c-tauxHaut').value = 3.5;
+  $('c-adultes').value = 2;
+  $('c-enfants').value = 0;
+  cRenderLoans();  // Affiche le message "Aucun prêt"
+}
+
 // Restore route from hash on load
 function initRoute() {
   const h = window.location.hash;
@@ -2073,6 +2737,7 @@ $('anneesRp').value = 5;
 $('anneeSimu').value = 10;
 recalc();
 bInit();
+cInit();
 initRoute();
 </script>
 </body>
