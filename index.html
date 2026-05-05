@@ -1948,7 +1948,18 @@ const ROUTES = {
   B:       { title: 'EvalImmo · Étude rétroactive', subtitle: 'À partir de quand votre achat est-il devenu rentable ?' },
   C:       { title: 'EvalImmo · Capacité de projet', subtitle: 'Pilotez vos prêts en cours et votre capacité d\'emprunt.' },
 };
+const C_PASSWORD = 'evalimmo-capacite';
 function navigate(route) {
+  // ── Niveau 1 : soft password gate pour le Module C ──
+  if (route === 'C' && sessionStorage.getItem('modC_unlocked') !== '1') {
+    const pwd = prompt('🔒 Module C — Accès restreint\n\nMot de passe :');
+    if (pwd === null) return; // annulé
+    if (pwd !== C_PASSWORD) {
+      alert('❌ Mot de passe incorrect. Accès refusé.');
+      return;
+    }
+    sessionStorage.setItem('modC_unlocked', '1');
+  }
   // Hide all
   $('landing').style.display = 'none';
   $('module-a').style.display = 'none';
