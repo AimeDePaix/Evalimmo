@@ -492,9 +492,9 @@ footer{text-align:center;padding-bottom:40px;font-size:.72rem;color:var(--g400);
   </div>
 
   <div class="kpi-row k3" style="margin-bottom:18px">
-    <div class="kpi" id="b-kpi-be-box"><div class="kl">Break-even patrimonial</div><div class="kv" id="b-kpi-be">—</div><div class="ks" id="b-kpi-be-s">—</div></div>
+    <div class="kpi" id="b-kpi-be-box"><div class="kl">Point d'équilibre patrimonial</div><div class="kv" id="b-kpi-be">—</div><div class="ks" id="b-kpi-be-s">—</div></div>
     <div class="kpi" id="b-kpi-av-box"><div class="kl">Avantage net aujourd'hui</div><div class="kv" id="b-kpi-av">—</div><div class="ks" id="b-kpi-av-s">si revente immédiate</div></div>
-    <div class="kpi kblue"><div class="kl">Equity actuelle</div><div class="kv" id="b-kpi-eq">—</div><div class="ks" id="b-kpi-eq-s">valeur bien − capital restant</div></div>
+    <div class="kpi kblue"><div class="kl">Capital constitué</div><div class="kv" id="b-kpi-eq">—</div><div class="ks" id="b-kpi-eq-s">valeur bien − capital restant</div></div>
   </div>
 
   <div class="card">
@@ -511,7 +511,7 @@ footer{text-align:center;padding-bottom:40px;font-size:.72rem;color:var(--g400);
               <th>Cumul locataire</th>
               <th>Valeur bien</th>
               <th>Capital restant</th>
-              <th>Equity</th>
+              <th>Capital constitué</th>
               <th>Avantage net</th>
             </tr>
           </thead>
@@ -778,6 +778,13 @@ footer{text-align:center;padding-bottom:40px;font-size:.72rem;color:var(--g400);
       <div class="card">
         <div class="card-t"><span class="ico">🏘️</span> Le bien</div>
         <div class="card-b">
+          <div class="field" style="margin-bottom:12px">
+            <label>Type de bien</label>
+            <select id="typeLogement" style="padding:8px 10px;border:1.5px solid var(--g200);border-radius:8px;font-size:.85rem;color:var(--g800);background:#fff;outline:none;width:100%;cursor:pointer;font-family:inherit">
+              <option value="ancien">Ancien — FDN ≈ 8 %</option>
+              <option value="neuf">Neuf / VEFA — FDN ≈ 2,5 %</option>
+            </select>
+          </div>
           <div class="sub">Prix d'acquisition</div>
           <div class="grid2" style="margin-bottom:10px">
             <div class="field">
@@ -791,7 +798,7 @@ footer{text-align:center;padding-bottom:40px;font-size:.72rem;color:var(--g400);
           </div>
           <div class="grid2" style="margin-bottom:10px">
             <div class="field">
-              <label>Frais de notaire <span class="hint">auto ≈ 8 % hors mobilier</span></label>
+              <label>Frais de notaire <span class="hint" id="fdn-hint">auto ≈ 8 % hors mobilier</span></label>
               <div class="iw"><input type="number" id="fraisNotaire" class="auto" placeholder="0" min="0" step="100"><span class="u">€</span></div>
             </div>
             <div class="field">
@@ -824,6 +831,7 @@ footer{text-align:center;padding-bottom:40px;font-size:.72rem;color:var(--g400);
       <div class="card">
         <div class="card-t"><span class="ico">🏦</span> Financement</div>
         <div class="card-b">
+          <div class="info neutral" style="margin-bottom:10px;font-size:.73rem;line-height:1.5">📊 <strong>Baromètre MeilleurTaux — Mai 2026 (25 ans) :</strong> excellent <strong>3,2 %</strong> · très bon <strong>3,4 %</strong> · bon <strong>3,69 %</strong> &nbsp;<a href="https://www.meilleurtaux.com/credit-immobilier/barometre-des-taux.html" target="_blank" rel="noopener" style="color:var(--blue);font-weight:600;text-decoration:none">Voir le baromètre →</a></div>
           <div class="grid2" style="margin-bottom:10px">
             <div class="field">
               <label>Taux d'emprunt</label>
@@ -872,8 +880,8 @@ footer{text-align:center;padding-bottom:40px;font-size:.72rem;color:var(--g400);
                 <div class="iw"><input type="number" id="txAss2" placeholder="0.30" min="0" max="2" step="0.01"><span class="u">%/an</span></div>
               </div>
             </div>
-            <div class="info neutral" style="margin-bottom:10px;font-size:.74rem">💡 Quotité totale typique : 200 % (chaque emprunteur couvert à 100 %). Si 100 % au total : un seul est assuré, l'autre 0 %.</div>
           </div>
+          <div class="info neutral" style="margin-bottom:10px;font-size:.74rem">💡 Quotité totale typique : 200 % (chaque emprunteur couvert à 100 %). Si 100 % au total : un seul est assuré, l'autre 0 %.</div>
           <div class="sep"></div>
 
           <div class="sub" style="margin-bottom:6px">Récupération garantie crédit logement</div>
@@ -901,18 +909,6 @@ footer{text-align:center;padding-bottom:40px;font-size:.72rem;color:var(--g400);
             <tr class="muted"><td>Coût total intérêts</td><td id="r-ints">—</td></tr>
             <tr class="muted" id="r-recup-row"><td>Récup. garantie en fin de prêt</td><td id="r-recup">—</td></tr>
           </table>
-        </div>
-      </div>
-
-      <!-- Loyer alternatif projeté -->
-      <div class="card">
-        <div class="card-t"><span class="ico">🔑</span> Loyer alternatif projeté</div>
-        <div class="card-b">
-          <div class="info neutral" style="margin-bottom:12px">Que paieriez-vous si vous louiez plutôt ? Renseignez le budget de l'appartement équivalent au moment de l'acquisition.</div>
-          <div class="field">
-            <label>Loyer mensuel CC <span class="hint">tout compris, EDF inclus</span></label>
-            <div class="iw"><input type="number" id="loyerAlt" placeholder="1 800" min="0" step="50"><span class="u">€/mois</span></div>
-          </div>
         </div>
       </div>
 
@@ -1046,11 +1042,8 @@ footer{text-align:center;padding-bottom:40px;font-size:.72rem;color:var(--g400);
       </div>
 
       <!-- KPIs section 1 -->
-      <div class="kpi-row k2">
+      <div class="kpi-row k3">
         <div class="kpi kblue"><div class="kl">Mensualité totale</div><div class="kv" id="k-mens">—</div><div class="ks">crédit + assurance emprunteur</div></div>
-        <div class="kpi" id="k-delta-box"><div class="kl">Delta vs loyer alternatif</div><div class="kv" id="k-delta">—</div><div class="ks" id="k-delta-s">par mois</div></div>
-      </div>
-      <div class="kpi-row k2">
         <div class="kpi"><div class="kl">Coût total projet</div><div class="kv" id="k-total">—</div><div class="ks">acquisition complète</div></div>
         <div class="kpi"><div class="kl">Capital emprunté</div><div class="kv" id="k-emprunt">—</div><div class="ks" id="k-emprunt-s">—</div></div>
       </div>
@@ -1063,7 +1056,7 @@ footer{text-align:center;padding-bottom:40px;font-size:.72rem;color:var(--g400);
   <div class="sec-hdr">
     <div class="sec-num">2</div>
     <div>
-      <h2>Coût total de possession (TCO)</h2>
+      <h2>Coût total de possession</h2>
       <p>Ce que vous dépensez réellement chaque mois en tant que propriétaire occupant, face au budget de location équivalent.</p>
     </div>
   </div>
@@ -1092,6 +1085,16 @@ footer{text-align:center;padding-bottom:40px;font-size:.72rem;color:var(--g400);
     </div>
 
     <div class="gap-sm">
+      <div class="card">
+        <div class="card-t"><span class="ico">🔑</span> Loyer alternatif projeté</div>
+        <div class="card-b">
+          <div class="info neutral" style="margin-bottom:12px;font-size:.78rem">Que paieriez-vous si vous louiez un bien équivalent ? Renseignez le loyer au moment de l'acquisition — il sera indexé sur l'inflation dans la projection.</div>
+          <div class="field">
+            <label>Loyer mensuel CC <span class="hint">tout compris, EDF inclus</span></label>
+            <div class="iw"><input type="number" id="loyerAlt" placeholder="1 800" min="0" step="50"><span class="u">€/mois</span></div>
+          </div>
+        </div>
+      </div>
       <div class="card">
         <div class="card-t"><span class="ico">⚖️</span> Achat vs Location alternative</div>
         <div class="card-b">
@@ -1290,7 +1293,7 @@ footer{text-align:center;padding-bottom:40px;font-size:.72rem;color:var(--g400);
     <div class="chart-wrap"><canvas id="chart" height="280"></canvas></div>
     <div class="chart-leg">
       <div class="leg-i"><div class="leg-dot" style="background:#1d4ed8"></div> Valeur nette si vente (après remboursement + frais)</div>
-      <div class="leg-i"><div class="leg-dot" style="background:#16a34a"></div> Equity brute (valeur bien − dette)</div>
+      <div class="leg-i"><div class="leg-dot" style="background:#16a34a"></div> Capital constitué (valeur bien − dette)</div>
       <div class="leg-i" style="color:var(--orange)"><div class="leg-dash"></div> Placement alternatif (apport + surcoût mensuel investis)</div>
     </div>
   </div>
@@ -1304,7 +1307,7 @@ footer{text-align:center;padding-bottom:40px;font-size:.72rem;color:var(--g400);
             <th>Année</th>
             <th>Valeur bien</th>
             <th>Capital restant</th>
-            <th>Equity brute</th>
+            <th>Capital constitué</th>
             <th>Net si vente</th>
             <th>Intérêts cumulés</th>
             <th>Charges + travaux</th>
@@ -1322,9 +1325,9 @@ footer{text-align:center;padding-bottom:40px;font-size:.72rem;color:var(--g400);
   <div id="final-kpis" class="hidden">
     <div class="kpi-row k4">
       <div class="kpi kblue"><div class="kl">Valeur bien à terme</div><div class="kv" id="f-valeur">—</div><div class="ks" id="f-valeur-s">—</div></div>
-      <div class="kpi kgreen"><div class="kl">Equity à terme</div><div class="kv" id="f-equity">—</div><div class="ks">valeur − dette</div></div>
+      <div class="kpi kgreen"><div class="kl">Capital constitué</div><div class="kv" id="f-equity">—</div><div class="ks">valeur − dette</div></div>
       <div class="kpi" id="f-avantage-box"><div class="kl">Avantage achat final</div><div class="kv" id="f-avantage">—</div><div class="ks">vs placement alternatif</div></div>
-      <div class="kpi"><div class="kl">Breakeven</div><div class="kv" id="f-breakeven">—</div><div class="ks">achat devient rentable</div></div>
+      <div class="kpi"><div class="kl">Point d'équilibre</div><div class="kv" id="f-breakeven">—</div><div class="ks">achat devient rentable</div></div>
     </div>
   </div>
 </section>
@@ -1757,10 +1760,14 @@ function drawChart(rows, anneeSimu) {
     ctx.beginPath(); ctx.moveTo(PAD.left, y0); ctx.lineTo(PAD.left + cW, y0); ctx.stroke();
     ctx.setLineDash([]);
   }
-  ctx.fillStyle = '#94a3b8'; ctx.textAlign = 'center';
+  // Label "Années" à gauche de l'axe X
+  ctx.textAlign = 'right'; ctx.font = 'bold 9px -apple-system,sans-serif'; ctx.fillStyle = '#64748b';
+  ctx.fillText('Années', PAD.left - 4, PAD.top + cH + 22);
+  // Numéros des années (sans "An")
+  ctx.fillStyle = '#94a3b8'; ctx.textAlign = 'center'; ctx.font = '10px -apple-system,sans-serif';
   const step = Math.max(1, Math.floor(rows.length / 8));
   rows.forEach((r, i) => {
-    if (i % step === 0 || i === rows.length - 1) ctx.fillText('An ' + r.yr, sx(i), PAD.top + cH + 22);
+    if (i % step === 0 || i === rows.length - 1) ctx.fillText(r.yr, sx(i), PAD.top + cH + 22);
   });
 
   // Marker année simulée
@@ -1830,8 +1837,12 @@ function updateFraisNotaire() {
     + (parseFloat($('prixParking').value) || 0)
     - (parseFloat($('mobilier').value) || 0)
   );
+  const isNeuf = $('typeLogement') && $('typeLogement').value === 'neuf';
+  const tauxFDN = isNeuf ? 0.025 : 0.08;
+  const hintEl = $('fdn-hint');
+  if (hintEl) hintEl.textContent = isNeuf ? 'auto ≈ 2,5 % (neuf)' : 'auto ≈ 8 % (ancien)';
   if (base > 0 && !$('fraisNotaire')._touched) {
-    $('fraisNotaire').value = Math.round(base * 0.08);
+    $('fraisNotaire').value = Math.round(base * tauxFDN);
     $('fraisNotaire').classList.add('auto');
   }
 }
@@ -1855,14 +1866,25 @@ $('mobilier').addEventListener('input', () => {
 
 $('fraisNotaire').addEventListener('input', () => { $('fraisNotaire')._touched = true; updateGarantie(); recalc(); });
 $('garantie').addEventListener('input', () => { $('garantie')._touched = true; $('garantie').classList.remove('auto'); recalc(); });
+$('typeLogement').addEventListener('change', () => {
+  // Recalculer FDN au nouveau taux (si non touché manuellement)
+  $('fraisNotaire')._touched = false;
+  $('fraisNotaire').classList.add('auto');
+  updateFraisNotaire();
+  updateGarantie();
+  updateRisqueCardVisibility();
+  recalc();
+});
 
 function updateRisqueCardVisibility() {
-  const show = $('isCopro').checked && $('showRisque').checked;
+  const isNeuf = $('typeLogement') && $('typeLogement').value === 'neuf';
+  const show = !isNeuf && $('isCopro').checked && $('showRisque').checked;
   $('card-risque').classList.toggle('hidden', !show);
+  // Masquer le toggle risque si on est dans le neuf (pas de risque structurel)
+  $('card-risque-toggle').classList.toggle('hidden', isNeuf || !$('isCopro').checked);
 }
 $('isCopro').addEventListener('change', () => {
   $('copro-section').classList.toggle('hidden', !$('isCopro').checked);
-  $('card-risque-toggle').classList.toggle('hidden', !$('isCopro').checked);
   updateRisqueCardVisibility();
   recalc();
 });
